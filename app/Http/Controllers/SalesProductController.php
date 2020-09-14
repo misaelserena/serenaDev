@@ -137,9 +137,9 @@ class SalesProductController extends Controller
 			$client->users_id		= Auth::user()->id;
 			$client->save();
 
-			$data = [];
-			$data['id'] = $client->id;
-			$data['name'] = $client->name.' '.$client->last_name.' '.$client->scnd_last_name;
+			$data			= [];
+			$data['id']		= $client->id;
+			$data['name']	= $client->name.' '.$client->last_name.' '.$client->scnd_last_name;
 
 			return Response($data);
 		}
