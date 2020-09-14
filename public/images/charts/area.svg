@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 592 592" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;">
+    <g id="SvgjsG1003" transform="matrix(1,0,0,1,41.3298,283.22)">
+        <g id="SvgjsLine1009" transform="matrix(2.00066,0,0,2.00066,1000.33,-260.352)">
+            <path d="M-500,0L-500,260.181" style="fill:rgb(177,185,196);fill-opacity:0.894118;fill-rule:nonzero;stroke:rgb(182,182,182);stroke-width:1px;stroke-dasharray:3,3;"/>
+        </g>
+        <g id="SvgjsG1034">
+            <g id="SvgjsG1035" transform="matrix(1,0,0,1,0,-4)">
+                <g id="SvgjsText1037" transform="matrix(1,0,0,1,-15.015,289.181)">
+                    <text x="0px" y="0px" style="font-family:'Helvetica';font-size:12px;fill:rgb(55,61,63);">00:00</text>
+                </g>
+                <g id="SvgjsText1040" transform="matrix(1,0,0,1,67.5451,289.181)">
+                    <text x="0px" y="0px" style="font-family:'Helvetica';font-size:12px;fill:rgb(55,61,63);">01:00</text>
+                </g>
+                <g id="SvgjsText1043" transform="matrix(1,0,0,1,150.105,289.181)">
+                    <text x="0px" y="0px" style="font-family:'Helvetica';font-size:12px;fill:rgb(55,61,63);">02:00</text>
+                </g>
+                <g id="SvgjsText1046" transform="matrix(1,0,0,1,232.665,289.181)">
+                    <text x="0px" y="0px" style="font-family:'Helvetica';font-size:12px;fill:rgb(55,61,63);">03:00</text>
+                </g>
+                <g id="SvgjsText1049" transform="matrix(1,0,0,1,315.225,289.181)">
+                    <text x="0px" y="0px" style="font-family:'Helvetica';font-size:12px;fill:rgb(55,61,63);">04:00</text>
+                </g>
+                <g id="SvgjsText1052" transform="matrix(1,0,0,1,397.785,289.181)">
+                    <text x="0px" y="0px" style="font-family:'Helvetica';font-size:12px;fill:rgb(55,61,63);">05:00</text>
+                </g>
+                <g id="SvgjsText1055" transform="matrix(1,0,0,1,480.346,289.181)">
+                    <text x="0px" y="0px" style="font-family:'Helvetica';font-size:12px;fill:rgb(55,61,63);">06:00</text>
+                </g>
+            </g>
+            <path id="SvgjsLine1057" d="M0,261.181L536.641,261.181" style="fill-rule:nonzero;stroke:rgb(224,224,224);stroke-width:1px;"/>
+        </g>
+        <g id="SvgjsG1070">
+            <g id="SvgjsG1071">
+                <path id="SvgjsLine1080" d="M0,0L536.641,0" style="fill-rule:nonzero;stroke:rgb(224,224,224);stroke-width:1px;"/>
+                <path id="SvgjsLine1081" d="M0,65.045L536.641,65.045" style="fill-rule:nonzero;stroke:rgb(224,224,224);stroke-width:1px;"/>
+                <path id="SvgjsLine1082" d="M0,130.091L536.641,130.091" style="fill-rule:nonzero;stroke:rgb(224,224,224);stroke-width:1px;"/>
+                <path id="SvgjsLine1083" d="M0,195.136L536.641,195.136" style="fill-rule:nonzero;stroke:rgb(224,224,224);stroke-width:1px;"/>
+                <path id="SvgjsLine1084" d="M0,260.181L536.641,260.181" style="fill-rule:nonzero;stroke:rgb(224,224,224);stroke-width:1px;"/>
+                <g id="SvgjsLine10801" serif:id="SvgjsLine1080" transform="matrix(1,0,0,1,0,-259.85)">
+                    <path d="M0,0L536.641,0" style="fill-rule:nonzero;stroke:rgb(224,224,224);stroke-width:1px;"/>
+                </g>
+                <g id="SvgjsLine10811" serif:id="SvgjsLine1081" transform="matrix(1,0,0,1,0,-259.85)">
+                    <path d="M0,65.045L536.641,65.045" style="fill-rule:nonzero;stroke:rgb(224,224,224);stroke-width:1px;"/>
+                </g>
+                <g id="SvgjsLine10821" serif:id="SvgjsLine1082" transform="matrix(1,0,0,1,0,-259.85)">
+                    <path d="M0,130.091L536.641,130.091" style="fill-rule:nonzero;stroke:rgb(224,224,224);stroke-width:1px;"/>
+                </g>
+                <g id="SvgjsLine10831" serif:id="SvgjsLine1083" transform="matrix(1,0,0,1,0,-259.85)">
+                    <path d="M0,195.136L536.641,195.136" style="fill-rule:nonzero;stroke:rgb(224,224,224);stroke-width:1px;"/>
+                </g>
+            </g>
+            <path id="SvgjsLine1073" d="M0,261.181L0,267.181" style="fill-rule:nonzero;stroke:rgb(224,224,224);stroke-width:1px;"/>
+            <path id="SvgjsLine1074" d="M82.56,261.181L82.56,267.181" style="fill-rule:nonzero;stroke:rgb(224,224,224);stroke-width:1px;"/>
+            <path id="SvgjsLine1075" d="M165.12,261.181L165.12,267.181" style="fill-rule:nonzero;stroke:rgb(224,224,224);stroke-width:1px;"/>
+            <path id="SvgjsLine1076" d="M247.68,261.181L247.68,267.181" style="fill-rule:nonzero;stroke:rgb(224,224,224);stroke-width:1px;"/>
+            <path id="SvgjsLine1077" d="M330.24,261.181L330.24,267.181" style="fill-rule:nonzero;stroke:rgb(224,224,224);stroke-width:1px;"/>
+            <path id="SvgjsLine1078" d="M412.8,261.181L412.8,267.181" style="fill-rule:nonzero;stroke:rgb(224,224,224);stroke-width:1px;"/>
+            <path id="SvgjsLine1079" d="M495.361,261.181L495.361,267.181" style="fill-rule:nonzero;stroke:rgb(224,224,224);stroke-width:1px;"/>
+            <path id="SvgjsLine1086" d="M0,260.181L536.641,260.181" style="fill-rule:nonzero;"/>
+            <path id="SvgjsLine1085" d="M0,1L0,260.181" style="fill-rule:nonzero;"/>
+        </g>
+        <g id="SvgjsG1015">
+            <g id="SvgjsG1025">
+                <path id="SvgjsPath1032" d="M0,260.181L0,236.331C43.344,236.331 61.317,144.844 104.661,144.844C133.557,144.844 155.999,60.759 184.895,60.759C213.791,60.759 260.5,98.208 289.396,98.208C318.292,98.208 340.302,-39.915 369.198,-39.915C398.094,-39.915 444.64,32.688 473.536,32.688C502.432,32.688 507.745,-0.919 536.641,-0.919C536.641,-0.919 536.641,171.782 536.641,260.181" style="fill:url(#_Linear1);fill-rule:nonzero;"/>
+                <path id="SvgjsPath1033" d="M0,236.331C43.344,236.331 64.564,144.206 107.908,144.206C136.804,144.206 155.138,60.245 184.034,60.245C212.93,60.245 260.626,97.179 289.522,97.179C318.418,97.179 342.307,-39.915 371.203,-39.915C400.099,-39.915 444.455,32.688 473.351,32.688C502.247,32.688 507.745,-0.919 536.641,-0.919" style="fill:none;stroke:rgb(0,227,150);stroke-width:4px;"/>
+            </g>
+            <g id="SvgjsG1016">
+                <path id="SvgjsPath1023" d="M0,260.181L0,192.968C43.344,192.968 38.489,-0.918 81.833,-0.918C110.729,-0.918 140.646,12.78 169.542,12.78C198.438,12.78 239.424,-110.584 268.32,-110.584C297.216,-110.584 340.226,-64.714 369.122,-64.714C398.018,-64.714 414.836,-194.805 443.732,-194.805C472.628,-194.805 507.745,-129.76 536.641,-129.76C536.641,-129.76 536.641,37.386 536.641,260.181" style="fill:url(#_Linear2);fill-rule:nonzero;"/>
+                <path id="SvgjsPath1024" d="M0,192.968C43.344,192.968 36.18,-0.252 79.524,-0.252C108.42,-0.252 141.142,12.78 170.038,12.78C198.934,12.78 239.424,-111.624 268.32,-111.624C297.216,-111.624 339.855,-64.714 368.751,-64.714C397.647,-64.714 416.271,-194.805 445.167,-194.805C474.063,-194.805 507.745,-129.76 536.641,-129.76" style="fill:none;stroke:rgb(0,143,251);stroke-width:4px;"/>
+            </g>
+        </g>
+    </g>
+    <g id="SvgjsG1059" transform="matrix(1,0,0,1,11.3298,243.22)">
+        <g id="SvgjsText1060" transform="matrix(1,0,0,1,1.647,41.4)">
+            <text x="0px" y="0px" style="font-family:'Helvetica';font-size:11px;fill:rgb(55,61,63);">120</text>
+        </g>
+        <g id="SvgjsText10601" serif:id="SvgjsText1060" transform="matrix(1,0,0,1,1.647,-218.781)">
+            <text x="0px" y="0px" style="font-family:'Helvetica';font-size:11px;fill:rgb(55,61,63);">230</text>
+        </g>
+        <g id="SvgjsText1062" transform="matrix(1,0,0,1,7.765,106.445)">
+            <text x="0px" y="0px" style="font-family:'Helvetica';font-size:11px;fill:rgb(55,61,63);">90</text>
+        </g>
+        <g id="SvgjsText10621" serif:id="SvgjsText1062" transform="matrix(1,0,0,1,1.647,-153.736)">
+            <text x="0px" y="0px" style="font-family:'Helvetica';font-size:11px;fill:rgb(55,61,63);">210</text>
+        </g>
+        <g id="SvgjsText1064" transform="matrix(1,0,0,1,7.765,171.491)">
+            <text x="0px" y="0px" style="font-family:'Helvetica';font-size:11px;fill:rgb(55,61,63);">60</text>
+        </g>
+        <g id="SvgjsText10641" serif:id="SvgjsText1064" transform="matrix(1,0,0,1,1.647,-88.6906)">
+            <text x="0px" y="0px" style="font-family:'Helvetica';font-size:11px;fill:rgb(55,61,63);">180</text>
+        </g>
+        <g id="SvgjsText1066" transform="matrix(1,0,0,1,7.765,236.536)">
+            <text x="0px" y="0px" style="font-family:'Helvetica';font-size:11px;fill:rgb(55,61,63);">30</text>
+        </g>
+        <g id="SvgjsText10661" serif:id="SvgjsText1066" transform="matrix(1,0,0,1,1.647,-23.6453)">
+            <text x="0px" y="0px" style="font-family:'Helvetica';font-size:11px;fill:rgb(55,61,63);">150</text>
+        </g>
+        <g id="SvgjsText1068" transform="matrix(1,0,0,1,13.882,301.581)">
+            <text x="0px" y="0px" style="font-family:'Helvetica';font-size:11px;fill:rgb(55,61,63);">0</text>
+        </g>
+    </g>
+    <defs>
+        <linearGradient id="_Linear1" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(1.90655e-14,311.363,-311.363,1.90655e-14,254.67,-89.9626)"><stop offset="0" style="stop-color:rgb(0,227,150);stop-opacity:0.647059"/><stop offset="1" style="stop-color:rgb(128,241,203);stop-opacity:0.494118"/></linearGradient>
+        <linearGradient id="_Linear2" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(-2.24954,454.986,-454.986,-2.24954,325.873,-194.805)"><stop offset="0" style="stop-color:rgb(0,143,251);stop-opacity:0.647059"/><stop offset="1" style="stop-color:rgb(128,199,253);stop-opacity:0.494118"/><stop offset="1" style="stop-color:rgb(128,199,253);stop-opacity:0.494118"/></linearGradient>
+    </defs>
+</svg>
