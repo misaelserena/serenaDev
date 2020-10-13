@@ -37,7 +37,6 @@ class ConfigurationUsersController extends Controller
 		$areas			= App\Area::orderName()->where('status','ACTIVE')->get();
 		$departments	= App\Departament::orderName()->where('status','ACTIVE')->get();
 		$banks			= App\Banks::orderName()->get();
-		$sections 		= App\SectionTickets::orderName()->get();
 		return view('configuration.user.create',
 			[
 				'id'			=> $data['father'],
@@ -50,7 +49,6 @@ class ConfigurationUsersController extends Controller
 				'areas'			=> $areas,
 				'departments'	=> $departments,
 				'banks'			=> $banks,
-				'sections'		=> $sections
 			]);
 	}
 
@@ -173,7 +171,6 @@ class ConfigurationUsersController extends Controller
 		$roles					= App\Role::where('status','ACTIVE')->get();
 		$user_has_enterprises	= DB::table('user_has_enterprise')->select('enterprise_id')->where('user_id',$id)->get();
 		$user					= App\User::find($id);
-		$sections 				= App\SectionTickets::orderName()->get();
 		if($user != "")
 		{
 			return view('configuration.user.create',
@@ -186,7 +183,6 @@ class ConfigurationUsersController extends Controller
 					'user' 					=> $user,
 					'roles' 				=> $roles,
 					'user_has_enterprises' 	=> $user_has_enterprises,
-					'sections' 				=> $sections
 				]);
 		}
 		else
@@ -403,7 +399,7 @@ class ConfigurationUsersController extends Controller
 					{
 						foreach ($request->enterprise as $ent)
 						{
-							$entM										= new App\PermissionEnt();
+							$entM										= new App\Permission_user_enterprise();
 							$entM->user_has_module_iduser_has_module	= $UHM->iduser_has_module;
 							$entM->enterprise_id						= $ent;
 							$entM->save();
@@ -413,7 +409,7 @@ class ConfigurationUsersController extends Controller
 					{
 						foreach ($request->department as $dep)
 						{
-							$depM										= new App\PermissionDep();
+							$depM										= new App\Permission_user_dep();
 							$depM->user_has_module_iduser_has_module	= $UHM->iduser_has_module;
 							$depM->departament_id						= $dep;
 							$depM->save();

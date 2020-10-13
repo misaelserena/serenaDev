@@ -169,7 +169,7 @@ class AdministrationWarehouseController extends Controller
 		$old->status	= 0;
 		$old->save();
 
-		$warehouse                    = new App\Warehouse();
+		$warehouse					= new App\Warehouse();
 		$warehouse->quantity		= $request->quantity;
 		$warehouse->product_id		= $request->product_id;
 		$warehouse->quantity_ex		= $request->quantity_ex;

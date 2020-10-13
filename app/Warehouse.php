@@ -14,15 +14,15 @@ class Warehouse extends Model
     ];
 
     protected $fillable = [
-        'idwarehouse',
         'quantity',
         'product_id',
         'quantity_ex',
         'price',
         'wholesale_price',
-        'warehouseType',
+        'date',
         'users_id',
-        'status'];
+        'status'
+    ];
 
     public $timestamps = false;
 
@@ -49,14 +49,9 @@ class Warehouse extends Model
 		return $query->orderBy('concept','asc');
     }
 
-    public function wareHouse()
-    {
-        return $this->hasOne('App\CatWarehouseType','id','warehouseType');
-    }
-
     public function versions()
     {
-        return $this->hasMany('App\VersionWarehouse','idWarehouse','idwarehouse');
+        return $this->hasMany('App\VersionWarehouse','idWarehouse','id');
     }
 
 }
