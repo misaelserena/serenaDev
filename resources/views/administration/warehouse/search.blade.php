@@ -72,10 +72,10 @@
 		<center>
 			{{ $warehouse->appends(['product_id'=> $product_id,'date'=>$date])->render() }}
 		</center>
-		@else
-			<div class="alert alert-danger" role="alert">Resultado no encontrado</div>
-		@endif
-		<br><br>
+	@else
+		<div class="alert alert-danger" role="alert">Resultado no encontrado</div>
+	@endif
+	<br><br>
 @endsection
 
 @section('scripts')

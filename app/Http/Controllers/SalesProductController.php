@@ -43,13 +43,44 @@ class SalesProductController extends Controller
 
 	public function store(Request $request)
 	{
-		
+		if (isset($request->product_id) && count($request->product_id)>0) 
+		{
+			$sales				= new App\Sales();
+			$sales->client_id	= $request->idClient;
+			$sales->iva			= $request->iva_all;
+			$sales->subtotal	= $request->subtotal_all;
+			$sales->discount	= $request->discount_all;
+			$sales->total		= $request->total_all;
+			$sales->users_id	= Auth::user()->id;
+			$sales->save();
+
+			for ($i=0; $i < count($request->product_id); $i++) 
+			{
+				$detail					= new App\SalesDetail();
+				$detail->products_id	= $request->product_id[$i];
+				$detail->type_price		= $request->type_price[$i];
+				$detail->quantity		= $request->quantity[$i];
+				$detail->price			= $request->price[$i];
+				$detail->subtotal		= $request->subtotal[$i];
+				$detail->iva			= $request->iva[$i];
+				$detail->discount		= $request->discount[$i];
+				$detail->total			= $request->total[$i];
+				$detail->sales_id		= $sales->id;
+				$detail->save();
+
+			}
+
+			$alert = "swal('','Venta Registrada Exitosamente','success')";
+
+			return redirect()->route('sales.product.index')->with('alert',$alert);
+		}
 	}
 
 	public function edit(Request $request)
 	{
 		$data	= App\Module::find($this->module_father);
 		
+		$sales = App\Sales::paginate(10);
 		return view('sales.products.search',
 			[
 				'id'			=> $data['father'],
@@ -57,6 +88,7 @@ class SalesProductController extends Controller
 				'details'		=> $data['details'],
 				'child_id'		=> $this->module_father,
 				'option_id'		=> $this->module_edit,
+				'sales' 		=> $sales
 			]);
 	}
 

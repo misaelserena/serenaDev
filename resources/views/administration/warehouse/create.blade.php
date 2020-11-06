@@ -88,6 +88,7 @@
 			maximumSelectionLength	: 1,
 		});
 		$('#code').numeric(false);
+		$('#price,#wholesale_price,#quantity,#quantity_ex').numeric({ altDecimal: ".", decimalPlaces: 2 });
 		$(document).on('click','.btn-delete-form',function(e)
 		{
 			e.preventDefault();

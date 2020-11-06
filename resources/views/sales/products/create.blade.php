@@ -1,10 +1,10 @@
 @extends('layouts.child_module')
 
 @section('data')
-	@if(isset($client))
-		{!! Form::open(['route' => ['administration.client.update', $client->id], 'method' => 'PUT', 'class' => 'needs-validation','novalidate']) !!}
+	@if(isset($sale))
+		{!! Form::open(['route' => ['sales.product.update', $sale->id], 'method' => 'PUT', 'class' => 'needs-validation','novalidate']) !!}
 	@else
-		{!! Form::open(['route' => 'administration.client.store', 'method' => 'POST', 'class' => 'needs-validation','novalidate']) !!}
+		{!! Form::open(['route' => 'sales.product.store', 'method' => 'POST', 'class' => 'needs-validation','novalidate']) !!}
 	@endif
 		@csrf
 		<div class="card" id="form_search_create">
@@ -40,7 +40,9 @@
 							<br>
 						</div>
 					</div>
-					<div class="table-responsive" id="result-clients"></div>
+					<div class="table-responsive" id="result-clients">
+						
+					</div>
 				</div>
 				<div style="display: none;" id="newClient" class="container">
 					<div class="form-row">
@@ -169,8 +171,23 @@
 						<input type="text" class="form-control quantity" id="quantity" placeholder="0">
 						<input type="hidden" class="form-control quantity_ex" id="quantity_ex" placeholder="0">
 					</div>
+					<div class="col-md-2 mb-3">
+						<label class="label-form" for="subtotal">Subtotal</label>
+						<input type="text" class="form-control subtotal" id="subtotal" placeholder="$0.00">
+					</div>
 				</div>
 				<div class="form-row">
+					<div class="col-md-2 mb-3">
+						<label class="label-form" for="iva">IVA</label>
+						<select class="form-control iva" id="iva" multiple="multiple" data-validation="required">
+							<option value="0">No</option>
+							<option value="1">Sí</option>
+						</select>
+					</div>
+					<div class="col-md-2 mb-3">
+						<label class="label-form" for="ivaCalc">IVA</label>
+						<input type="text" class="form-control ivaCalc" id="ivaCalc" placeholder="$0.00" readonly="readonly">
+					</div>
 					<div class="col-md-2 mb-3">
 						<label class="label-form" for="discount">Descuento</label>
 						<input type="text" class="form-control discount" id="discount" placeholder="$0.00">
@@ -180,7 +197,7 @@
 						<input type="text" class="form-control total" id="total" placeholder="$0.00">
 					</div>
 					<div class="col-md-1 mb-3">
-						<label class="label-form" for="total">Acción</label>
+						<label class="label-form" for="addProduct">Acción</label>
 						<button type="button" class='btn btn-success' id="addProduct" alt="Agregar producto" title="Agregar producto">
 							<svg class="bi" width="20" height="20" fill="currentColor"><use xlink:href="{{ asset("images/bootstrap-icons.svg#cart-plus") }}"></use></svg>
 						</button> 
@@ -191,13 +208,27 @@
 						<th>Producto</th>
 						<TH>Cantidad</TH>
 						<th>Precio</th>
+						<th>Subtotal</th>
+						<th>IVA</th>
 						<th>Descuento</th>
 						<th>Total</th>
 						<th>Acción</th>
 					</thead>
 					<tbody class="text-align-center" id="productSelected"></tbody>
 				</table>
-				<div class="row justify-content-end">
+			    <div class="row justify-content-end">
+			    	<div class="md-form col-4">
+			      		<label class="label-form" for="subtotal_all">Subtotal</label>
+						<input type="text" name="subtotal_all" class="form-control subtotal_all" id="subtotal_all" placeholder="$0.00">
+			    	</div>
+			  	</div>
+			  	<div class="row justify-content-end">
+			    	<div class="md-form col-4">
+			      		<label class="label-form" for="iva_all">IVA</label>
+						<input type="text" name="iva_all" class="form-control iva_all" id="iva_all" placeholder="$0.00">
+			    	</div>
+			  	</div>
+			  	<div class="row justify-content-end">
 			    	<div class="md-form col-4">
 			      		<label class="label-form" for="discount_all">Descuento</label>
 						<input type="text" name="discount_all" class="form-control discount_all" id="discount_all" placeholder="$0.00">
@@ -213,7 +244,7 @@
 		</div>
 		<p><br></p>
 		<center>
-			<button type="submit" class="btn btn-success">@if(isset($client)) GUARDAR CAMBIOS @else REGISTRAR @endif</button>
+			<button type="submit" name="sendForm" class="btn btn-success">@if(isset($client)) GUARDAR CAMBIOS @else REGISTRAR @endif</button>
 		</center>
 		<P><br></P>
 	{!! Form::close() !!}
@@ -227,25 +258,9 @@
 			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 		}
 	});
-	(function() {
-		'use strict';
-			window.addEventListener('load', function() {
-			var forms = document.getElementsByClassName('needs-validation');
-			var validation = Array.prototype.filter.call(forms, function(form) {
-				form.addEventListener('submit', function(event) {
-					if (form.checkValidity() === false) 
-					{
-						event.preventDefault();
-						event.stopPropagation();
-					}
-					form.classList.add('was-validated');
-				}, false);
-			});
-		}, false);
-	})();
 	$(document).ready(function()
 	{
-		$('[name="client_id"],#product_id,#type_price,[name="state_idstate"]').select2(
+		$('[name="client_id"],#product_id,#type_price,[name="state_idstate"],#iva').select2(
 		{
 			placeholder				: 'Seleccione uno',
 			language				: "es",
@@ -385,6 +400,8 @@
 				price = $(this).parents('div.card-body').find('.wholesale_price').val();
 			}
 			discount		= $(this).parents('div.card-body').find('.discount').val();
+			iva				= $(this).parents('div.card-body').find('.ivaCalc').val();
+			subtotal		= $(this).parents('div.card-body').find('.subtotal').val();
 			total			= $(this).parents('div.card-body').find('.total').val();
 			product_id		= $(this).parents('div.card-body').find('.product_id option:selected').val();
 			product_name	= $(this).parents('div.card-body').find('.product_id option:selected').text();
@@ -407,13 +424,20 @@
 					tr = $('<tr></tr>')
 							.append($('<td></td>')
 								.append(''+product_name+'')
-								.append($('<input type="hidden" name="product_id[]" value="'+product_id+'">')))
+								.append($('<input type="hidden" name="product_id[]" value="'+product_id+'">'))
+								.append($('<input type="hidden" name="type_price[]" value="'+type_price+'">')))
 							.append($('<td></td>')
 								.append(''+quantity+'')
 								.append($('<input type="hidden" name="quantity[]" value="'+quantity+'">')))
 							.append($('<td></td>')
 								.append(''+price+'')
 								.append($('<input type="hidden" name="price[]" value="'+price+'">')))
+							.append($('<td></td>')
+								.append(''+subtotal+'')
+								.append($('<input type="hidden" class="subtotal_table" name="subtotal[]" value="'+subtotal+'">')))
+							.append($('<td></td>')
+								.append(''+iva+'')
+								.append($('<input type="hidden" class="iva_table" name="iva[]" value="'+iva+'">')))
 							.append($('<td></td>')
 								.append(''+discount+'')
 								.append($('<input type="hidden" class="discount_table" name="discount[]" value="'+discount+'">')))
@@ -425,8 +449,8 @@
 
 					$('#productSelected').append(tr);
 
-					$('.quantity,.quantity_ex,.price,.discount,.total').val(null);
-					$('.product_id').val(null).trigger('change');
+					$('.quantity,.quantity_ex,.price,.discount,.total,.subtotal,.ivaCalc').val(null);
+					$('.product_id,.iva').val(null).trigger('change');
 
 					product_id = [];
 					$('[name="product_id[]"]').each(function()
@@ -451,16 +475,22 @@
 
 
 					tempDiscount	= 0;
+					tempSubtotal 	= 0;
+					tempIva 		= 0;
 					tempTotal		= 0;
 					//descuento	= Number($('input[name="descuento"]').val());
 					$("#productSelected tr").each(function(i, v)
 					{
 						tempDiscount	+= Number($(this).find('.discount_table').val());
+						tempIva  		+= Number($(this).find('.iva_table').val());
+						tempSubtotal	+= Number($(this).find('.subtotal_table').val());
 						tempTotal		+= Number($(this).find('.total_table').val());
 					});
 					
 					$('[name="total_all"]').val(tempTotal);
 					$('[name="discount_all"]').val(tempDiscount);
+					$('[name="subtotal_all"]').val(tempSubtotal);
+					$('[name="iva_all"]').val(tempIva);
 
 					swal('','Producto agregado','success');
 				}
@@ -501,6 +531,25 @@
 					});
 				}
 			});
+
+			tempDiscount	= 0;
+			tempSubtotal 	= 0;
+			tempIva 		= 0;
+			tempTotal		= 0;
+			//descuento	= Number($('input[name="descuento"]').val());
+			$("#productSelected tr").each(function(i, v)
+			{
+				tempDiscount	+= Number($(this).find('.discount_table').val());
+				tempIva  		+= Number($(this).find('.iva_table').val());
+				tempSubtotal	+= Number($(this).find('.subtotal_table').val());
+				tempTotal		+= Number($(this).find('.total_table').val());
+			});
+			
+			$('[name="total_all"]').val(tempTotal);
+			$('[name="discount_all"]').val(tempDiscount);
+			$('[name="subtotal_all"]').val(tempSubtotal);
+			$('[name="iva_all"]').val(tempIva);
+
 			swal('','Producto eliminado','success');
 		})
 		.on('change','#type_price',function()
@@ -525,11 +574,21 @@
 				$('.cont-price-wholesale').fadeOut();
 			}
 		})
-		.on('change','#quantity,#type_price,#discount',function()
+		.on('change','#quantity,#type_price,#discount,#iva',function()
 		{
 			type_price	= $('#type_price option:selected').val();
 			discount	= Number($('#discount').val()).toFixed(2);
 			quantity	= Number($('#quantity').val()).toFixed(2);
+
+			if ($('#iva option:selected').val() == 1) 
+			{
+				iva = 0.15;
+			}
+			else
+			{
+				iva = 0;
+			}
+
 			if (type_price != undefined) 
 			{
 				if (type_price == 1) 
@@ -541,8 +600,12 @@
 					price = Number($('#wholesale_price').val()).toFixed(2);
 				}
 
-				total = quantity * price - discount;
+				subtotal	= quantity * price;
+				ivaCalc 	= subtotal * iva;
+				total		= (subtotal + ivaCalc) - discount;
 
+				$('#ivaCalc').val(Number(ivaCalc).toFixed(2));
+				$('#subtotal').val(Number(subtotal).toFixed(2));
 				$('#total').val(Number(total).toFixed(2));
 
 			}
@@ -597,6 +660,30 @@
 				}
 			})
 
+		})
+		.on('click','[name="sendForm"]',function(e)
+		{
+			clientSelected 		= $('#clientSelected tr').length;
+			productSelected 	= $('#productSelected tr').length;
+
+			if (clientSelected > 0 && productSelected > 0) 
+			{
+				form = $(this).parents('form');
+				form.submit();
+			}
+			else
+			{
+				e.preventDefault();
+
+				if (clientSelected == 0)
+				{
+					swal('Error','Debe agregar un cliente','error');
+				} 
+				if (productSelected == 0)
+				{
+					swal('Error','Debe agregar al menos un producto','error');
+				} 
+			}
 		})
 	}); 	
 

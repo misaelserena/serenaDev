@@ -134,16 +134,11 @@
 			box-shadow		: 0 0 0 3px rgba(255, 255, 255, .25);
 		}
 
-		.bg-dark 
-		{
-		    background-color: #17847f !important
-		}
-
 	</style>
 	@yield('css')
 </head>
 <body>
-	<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+	<nav class="navbar navbar-dark sticky-top bg-green flex-md-nowrap p-0 shadow">
 	  	<a class="col-md-3 col-lg-2 mr-0 px-3" href="#" style="padding: 5px;padding-right: 5px;padding-left: 5px;text-align: center;">
 	  		<img style="width: 67px;height: auto;max-width: 90%;" src="{{ asset('images/logo-serena.png') }}">
 	  	</a>
