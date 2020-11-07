@@ -157,6 +157,7 @@ Route::group(['middleware' => ['permission:16']], function ()
 	Route::get('/sales/product/get-client', 'SalesProductController@getClients')->name('sales.product.get-clients'); 
 	Route::post('/sales/product/store-client', 'SalesProductController@storeClient')->name('sales.product.store-client');
 	Route::get('/sales/product/update-list','SalesProductController@updateList');
+	Route::get('/sales/product/document/download/{id}','SalesProductController@downloadDocument')->name('sales.download.document');
 
 });
 

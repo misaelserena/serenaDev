@@ -19,4 +19,8 @@ class SalesDetail extends Model
     	'sales_id'
     ];
 
+    public function productData()
+    {
+        return $this->hasOne('App\Products','id','products_id');
+    }
 }

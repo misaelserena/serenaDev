@@ -6,9 +6,14 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\URL;
-use App;
+use App\Module;
+use App\Sales;
+use App\SalesDetail;
+use App\Client;
+use App\Products;
 use Alert;
 use Auth;
+use PDF;
 
 class SalesProductController extends Controller
 {
@@ -18,7 +23,7 @@ class SalesProductController extends Controller
 
     public function index()
     {
-    	$data	= App\Module::find($this->module_father);
+    	$data	= Module::find($this->module_father);
 		return view('layouts.child_module',
 			[
 				'id'		=>	$data['father'],
@@ -30,7 +35,7 @@ class SalesProductController extends Controller
 
     public function create()
     {
-    	$data = App\Module::find($this->module_father);
+    	$data = Module::find($this->module_father);
 		return view('sales.products.create',
 			[
 				'id'		=>	$data['father'],
@@ -45,7 +50,7 @@ class SalesProductController extends Controller
 	{
 		if (isset($request->product_id) && count($request->product_id)>0) 
 		{
-			$sales				= new App\Sales();
+			$sales				= new Sales();
 			$sales->client_id	= $request->idClient;
 			$sales->iva			= $request->iva_all;
 			$sales->subtotal	= $request->subtotal_all;
@@ -56,7 +61,7 @@ class SalesProductController extends Controller
 
 			for ($i=0; $i < count($request->product_id); $i++) 
 			{
-				$detail					= new App\SalesDetail();
+				$detail					= new SalesDetail();
 				$detail->products_id	= $request->product_id[$i];
 				$detail->type_price		= $request->type_price[$i];
 				$detail->quantity		= $request->quantity[$i];
@@ -78,9 +83,31 @@ class SalesProductController extends Controller
 
 	public function edit(Request $request)
 	{
-		$data	= App\Module::find($this->module_father);
+		$data	= Module::find($this->module_father);
 		
-		$sales = App\Sales::paginate(10);
+		$sales = Sales::where(function($query) use ($request)
+				{
+					if ($request->mindate != "" && $request->maxdate != "") 
+					{
+						$query->whereBetween('created_at',[''.$request->mindate.' '.date('00:00:00').'',''.$request->maxdate.' '.date('23:59:59').'']);
+					}
+
+					if ($request->product_id != "") 
+					{
+						$query->whereHas('detail',function($queryDetail) use ($request)
+						{
+							$queryDetail->whereIn('products_id',$request->product_id);
+						});
+					}
+
+					if ($request->client_id != "") 
+					{
+						$query->whereIn('client_id',$request->client_id);
+					}
+				})
+				->orderBy('id','DESC')
+				->paginate(10);
+
 		return view('sales.products.search',
 			[
 				'id'			=> $data['father'],
@@ -88,13 +115,27 @@ class SalesProductController extends Controller
 				'details'		=> $data['details'],
 				'child_id'		=> $this->module_father,
 				'option_id'		=> $this->module_edit,
-				'sales' 		=> $sales
+				'sales' 		=> $sales,
+				'mindate' 		=> $request->mindate,
+				'maxdate' 		=> $request->maxdate,
+				'product_id' 	=> $request->product_id,
+				'client_id' 	=> $request->client_id
 			]);
 	}
 
 	public function show($id)
 	{
-
+		$data	= Module::find($this->module_father);
+		$sale 	= Sales::find($id);
+		return view('sales.products.view-sale',
+			[
+				'id'			=> $data['father'],
+				'title'			=> $data['name'],
+				'details'		=> $data['details'],
+				'child_id'		=> $this->module_father,
+				'option_id'		=> $this->module_edit,
+				'sale' 			=> $sale
+			]);
 	}
 
 	public function update(Request $request,$id)
@@ -112,7 +153,7 @@ class SalesProductController extends Controller
 		if ($request->ajax()) 
 		{
 			$name = $request->name;
-			$clients = App\Client::where('status',1)
+			$clients = Client::where('status',1)
 					->where(function($query) use ($name)
 					{
 						if ($name != "") 
@@ -130,7 +171,7 @@ class SalesProductController extends Controller
 	{
 		if ($request->ajax()) 
 		{
-			$products = App\Products::where('products.status',1)->whereNotIn('id',$request->product_id)->orderDescription()->get();
+			$products = Products::where('products.status',1)->whereNotIn('id',$request->product_id)->orderDescription()->get();
 
 
 			$count = 0;
@@ -153,7 +194,7 @@ class SalesProductController extends Controller
 	{
 		if ($request->ajax()) 
 		{
-			$client					= new App\Client();
+			$client					= new Client();
 			$client->name			= $request->name;
 			$client->last_name		= $request->last_name;
 			$client->scnd_last_name	= $request->scnd_last_name;
@@ -174,6 +215,21 @@ class SalesProductController extends Controller
 			$data['name']	= $client->name.' '.$client->last_name.' '.$client->scnd_last_name;
 
 			return Response($data);
+		}
+	}
+
+	public function downloadDocument($id)
+	{
+		$sale = Sales::find($id);
+		if ($sale != "")
+		{
+			//return view ('sales.products.document',['sale'=>$sale]);
+			$pdf = PDF::loadView('sales.products.document',['sale'=>$sale]);
+			return $pdf->download('venta_'.$sale->id.'.pdf');
+		}
+		else
+		{
+			return redirect('/error');
 		}
 	}
 }

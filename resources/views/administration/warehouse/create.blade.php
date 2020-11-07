@@ -7,46 +7,53 @@
 		{!! Form::open(['route' => 'administration.warehouse.store', 'method' => 'POST', 'class' => 'needs-validation','novalidate']) !!}
 	@endif
 		@csrf
-		<div class="form-row">
-			<div class="col-md-6 mb-3">
-				<label class="label-form" for="product_id">Producto</label>
-				<select class="form-control" id="product_id" name="product_id" multiple="multiple" data-validation="required">
-					@foreach(App\Products::where('products.status',1)->orderDescription()->get() as $cat)
-						<option value="{{ $cat->id }}" @if(isset($warehouse) && $warehouse->product_id ==$cat->id) selected="selected" @endif>{{ $cat->code }} - {{ $cat->description }}</option>
-					@endforeach
-				</select>
+		<div class="card" id="form_search_create">
+			<div class="card-header text-white bg-green">
+				DATOS DE PRODUCTO
+			</div>
+			<div class="card-body">
+				<div class="form-row">
+					<div class="col-md-6 mb-3">
+						<label class="label-form" for="product_id">Producto</label>
+						<select class="form-control" id="product_id" name="product_id" multiple="multiple" data-validation="required">
+							@foreach(App\Products::where('products.status',1)->orderDescription()->get() as $cat)
+								<option value="{{ $cat->id }}" @if(isset($warehouse) && $warehouse->product_id ==$cat->id) selected="selected" @endif>{{ $cat->code }} - {{ $cat->description }}</option>
+							@endforeach
+						</select>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="md-form col-md-6 mb-3">
+						<label class="label-form" for="quantity">Cantidad</label>
+						<input type="text" class="form-control" id="quantity" name="quantity" @if(isset($warehouse)) value="{{ $warehouse->quantity }}" @endif placeholder="Cantidad" required>
+					</div>
+					<div class="md-form col-md-6 mb-3">
+						<label class="label-form" for="date">Fecha</label>
+						<input type="text" class="form-control" id="date" name="date" @if(isset($warehouse)) value="{{ $warehouse->date }}" @endif placeholder="yyyy-mm-dd" required>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="md-form col-md-6 mb-3">
+						<label class="label-form" for="quantity_ex">Cantidad en existencia</label>
+						<input type="text" class="form-control" id="quantity_ex" name="quantity_ex" @if(isset($warehouse)) value="{{ $warehouse->quantity_ex }}" @else value="0" @endif readonly="readonly" placeholder="Cantidad" required>
+					</div>
+					<div class="md-form col-md-6 mb-3">
+						<label class="label-form" for="price">Precio</label>
+						<input type="text" class="form-control" id="price" name="price" @if(isset($warehouse)) value="{{ $warehouse->price }}" @endif placeholder="0.00" required>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="md-form col-md-6 mb-3">
+						<label class="label-form" for="wholesale_price">Precio Mayoreo</label>
+						<input type="text" class="form-control" id="wholesale_price" name="wholesale_price" @if(isset($warehouse)) value="{{ $warehouse->wholesale_price }}" @endif placeholder="0.00" required>
+					</div>
+				</div>
+				<p><br></p>
+				<center>
+					<button type="submit" class="btn btn-success">@if(isset($warehouse)) GUARDAR CAMBIOS @else REGISTRAR @endif</button>
+				</center>
 			</div>
 		</div>
-		<div class="form-row">
-			<div class="md-form col-md-6 mb-3">
-				<label class="label-form" for="quantity">Cantidad</label>
-				<input type="text" class="form-control" id="quantity" name="quantity" @if(isset($warehouse)) value="{{ $warehouse->quantity }}" @endif placeholder="Cantidad" required>
-			</div>
-			<div class="md-form col-md-6 mb-3">
-				<label class="label-form" for="date">Fecha</label>
-				<input type="text" class="form-control" id="date" name="date" @if(isset($warehouse)) value="{{ $warehouse->date }}" @endif placeholder="yyyy-mm-dd" required>
-			</div>
-		</div>
-		<div class="form-row">
-			<div class="md-form col-md-6 mb-3">
-				<label class="label-form" for="quantity_ex">Cantidad en existencia</label>
-				<input type="text" class="form-control" id="quantity_ex" name="quantity_ex" @if(isset($warehouse)) value="{{ $warehouse->quantity_ex }}" @else value="0" @endif readonly="readonly" placeholder="Cantidad" required>
-			</div>
-			<div class="md-form col-md-6 mb-3">
-				<label class="label-form" for="price">Precio</label>
-				<input type="text" class="form-control" id="price" name="price" @if(isset($warehouse)) value="{{ $warehouse->price }}" @endif placeholder="0.00" required>
-			</div>
-		</div>
-		<div class="form-row">
-			<div class="md-form col-md-6 mb-3">
-				<label class="label-form" for="wholesale_price">Precio Mayoreo</label>
-				<input type="text" class="form-control" id="wholesale_price" name="wholesale_price" @if(isset($warehouse)) value="{{ $warehouse->wholesale_price }}" @endif placeholder="0.00" required>
-			</div>
-		</div>
-		<p><br></p>
-		<center>
-			<button type="submit" class="btn btn-success">@if(isset($warehouse)) GUARDAR CAMBIOS @else REGISTRAR @endif</button>
-		</center>
 		<P><br></P>
 	{!! Form::close() !!}
 @endsection

@@ -49,60 +49,60 @@
 						<div class="md-form col-md-6 mb-3">
 							<i class="fas fa-user prefix"></i>
 							<label class="label-form" for="name">Nombre</label>
-							<input type="text" class="form-control" id="name" name="name" @if(isset($client)) value="{{ $client->name }}" @endif required>
+							<input type="text" class="form-control" id="name" name="name" required>
 						</div>
 						<div class="md-form col-md-6 mb-3">
 							<i class="fas fa-user prefix"></i>
 							<label class="label-form" for="last_name">Apellido Paterno</label>
-							<input type="text" class="form-control" id="last_name" name="last_name" @if(isset($client)) value="{{ $client->last_name }}" @endif required>
+							<input type="text" class="form-control" id="last_name" name="last_name" required>
 						</div>
 					</div>
 					<div class="form-row">
 						<div class="md-form col-md-6 mb-3">
 							<i class="fas fa-user prefix"></i>
 							<label class="label-form" for="scnd_last_name">Apellido Materno</label>
-							<input type="text" class="form-control" id="scnd_last_name" name="scnd_last_name" @if(isset($client)) value="{{ $client->scnd_last_name }}" @endif required>
+							<input type="text" class="form-control" id="scnd_last_name" name="scnd_last_name" required>
 						</div>
 						<div class="md-form col-md-6 mb-3">
 							<i class="fas fa-phone prefix"></i>
 							<label class="label-form" for="phone">Télefono</label>
-							<input type="text" class="form-control" id="phone" name="phone" @if(isset($client)) value="{{ $client->phone }}" @endif>
+							<input type="text" class="form-control" id="phone" name="phone">
 						</div>
 					</div>
 					<div class="form-row">
 						<div class="md-form col-md-6 mb-3">
 							<i class="fas fa-user prefix"></i>
 							<label class="label-form" for="rfc">RFC</label>
-							<input type="text" class="form-control" id="rfc" name="rfc" @if(isset($client)) value="{{ $client->rfc }}" @endif>
+							<input type="text" class="form-control" id="rfc" name="rfc">
 						</div>
 						<div class="md-form col-md-6 mb-3">
 							<i class="fas fa-address-card prefix"></i>
 							<label class="label-form" for="address">Dirección</label>
-							<input type="text" class="form-control" id="address" name="address" @if(isset($client)) value="{{ $client->address }}" @endif required>
+							<input type="text" class="form-control" id="address" name="address" required>
 						</div>
 					</div>
 					<div class="form-row">
 						<div class="md-form col-md-6 mb-3">
 							<i class="fas fa-hashtag prefix"></i>
 							<label class="label-form" for="number">Número</label>
-							<input type="text" class="form-control" id="number" name="number" @if(isset($client)) value="{{ $client->number }}" @endif required>
+							<input type="text" class="form-control" id="number" name="number" required>
 						</div>
 						<div class="md-form col-md-6 mb-3">
 							<i class="fas fa-building prefix"></i>
 							<label class="label-form" for="colony">Colonia</label>
-							<input type="text" class="form-control" id="colony" name="colony" @if(isset($client)) value="{{ $client->colony }}" @endif required>
+							<input type="text" class="form-control" id="colony" name="colony" required>
 						</div>
 					</div>
 					<div class="form-row">
 						<div class="md-form col-md-6 mb-3">
 							<i class="fas fa-mail-bulk prefix"></i>
 							<label class="label-form" for="postalCode">Código Postal</label>
-							<input type="text" class="form-control" id="postalCode" name="postalCode" @if(isset($client)) value="{{ $client->postalCode }}" @endif required>
+							<input type="text" class="form-control" id="postalCode" name="postalCode" required>
 						</div>
 						<div class="md-form col-md-6 mb-3">
 							<i class="fas fa-city prefix"></i>
 							<label class="label-form" for="city">Ciudad</label>
-							<input type="text" class="form-control" id="city" name="city" @if(isset($client)) value="{{ $client->city }}" @endif required>
+							<input type="text" class="form-control" id="city" name="city" required>
 						</div>
 					</div>
 					<div class="form-row">
@@ -110,7 +110,7 @@
 							<label class="label-form" for="code">Estado</label>
 							<select class="form-control" id="state_idstate" name="state_idstate" multiple="multiple" data-validation="required">
 								@foreach(App\State::orderName()->get() as $state)
-									<option value="{{ $state->idstate }}" @if(isset($client) && $client->state_idstate ==$state->idstate) selected="selected" @endif>{{ $state->description }}</option>
+									<option value="{{ $state->idstate }}">{{ $state->description }}</option>
 								@endforeach
 							</select>
 						</div>
@@ -147,7 +147,7 @@
 						<label class="label-form" for="product_id">Producto</label>
 						<select class="form-control product_id" id="product_id" multiple="multiple" data-validation="required">
 							@foreach(App\Products::where('products.status',1)->orderDescription()->get() as $cat)
-								<option value="{{ $cat->id }}" @if(isset($warehouse) && $warehouse->product_id ==$cat->id) selected="selected" @endif>{{ $cat->code }} - {{ $cat->description }}</option>
+								<option value="{{ $cat->id }}">{{ $cat->code }} - {{ $cat->description }}</option>
 							@endforeach
 						</select>
 					</div>
@@ -244,7 +244,7 @@
 		</div>
 		<p><br></p>
 		<center>
-			<button type="submit" name="sendForm" class="btn btn-success">@if(isset($client)) GUARDAR CAMBIOS @else REGISTRAR @endif</button>
+			<button type="submit" name="sendForm" class="btn btn-success">@if(isset($sale)) GUARDAR CAMBIOS @else REGISTRAR @endif</button>
 		</center>
 		<P><br></P>
 	{!! Form::close() !!}
@@ -265,6 +265,7 @@
 			placeholder				: 'Seleccione uno',
 			language				: "es",
 			maximumSelectionLength	: 1,
+			width 					: "100%"
 		});
 		$('#price,#total,#discount,#quantity,#quantity_ex').numeric({ altDecimal: ".", decimalPlaces: 2, negative:true });
 
@@ -304,6 +305,7 @@
 					placeholder				: 'Seleccione uno',
 					language				: "es",
 					maximumSelectionLength	: 1,
+					width 					: "100%"
 				});
 			}
 			else

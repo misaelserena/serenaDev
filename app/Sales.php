@@ -17,6 +17,11 @@ class Sales extends Model
     	'users_id'
     ];
 
+    public function detail()
+    {
+        return $this->hasMany('App\SalesDetail');
+    }
+
     public function clientData()
     {
     	return $this->hasOne('App\Client','id','client_id');

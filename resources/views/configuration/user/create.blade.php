@@ -27,89 +27,96 @@
 		{!! Form::open(['route' => 'configuration.user.store', 'method' => 'POST', 'class' => 'needs-validation','novalidate']) !!}
 	@endif
 		@csrf
-		<div class="form-row">
-			<div class="col-md-6 mb-3">
-				<label for="name">Nombre</label>
-				<input type="text" class="form-control" id="name" name="name" @if(isset($user)) value="{{ $user->name }}" @endif placeholder="Nombre" required>
+		<div class="card" id="form_search_create">
+			<div class="card-header text-white bg-green">
+				DATOS DE USUARIO
 			</div>
-			<div class="col-md-6 mb-3">
-				<label for="last_name">Apellido Paterno</label>
-				<input type="text" class="form-control" id="last_name" name="last_name" @if(isset($user)) value="{{ $user->last_name }}" @endif placeholder="Apellido Paterno" required>
-			</div>
-		</div>
-		<div class="form-row">
-			<div class="col-md-6 mb-3">
-				<label for="scnd_last_name">Apellido Materno</label>
-				<input type="text" class="form-control" id="scnd_last_name" name="scnd_last_name" @if(isset($user)) value="{{ $user->scnd_last_name }}" @endif placeholder="Apellido Materno">
-			</div>
-			<div class="col-md-6 mb-3">
-				Seleccione el genero: <br>
-				<div class="form-check form-check-inline">
-					<input class="form-check-input" name="gender" type="radio" id="hombre" value="hombre" required="required" @if(isset($user) && $user->gender == "hombre") checked="checked" @endif>
-					<label class="form-check-label" for="hombre">Hombre</label>
+			<div class="card-body">
+				<div class="form-row">
+					<div class="col-md-6 mb-3">
+						<label for="name">Nombre</label>
+						<input type="text" class="form-control" id="name" name="name" @if(isset($user)) value="{{ $user->name }}" @endif placeholder="Nombre" required>
+					</div>
+					<div class="col-md-6 mb-3">
+						<label for="last_name">Apellido Paterno</label>
+						<input type="text" class="form-control" id="last_name" name="last_name" @if(isset($user)) value="{{ $user->last_name }}" @endif placeholder="Apellido Paterno" required>
+					</div>
 				</div>
-				<div class="form-check form-check-inline">
-					<input class="form-check-input" name="gender" type="radio" id="mujer" value="mujer" required="required" @if(isset($user) && $user->gender == "mujer") checked="checked" @endif>
-					<label class="form-check-label" for="mujer">Mujer</label>
+				<div class="form-row">
+					<div class="col-md-6 mb-3">
+						<label for="scnd_last_name">Apellido Materno</label>
+						<input type="text" class="form-control" id="scnd_last_name" name="scnd_last_name" @if(isset($user)) value="{{ $user->scnd_last_name }}" @endif placeholder="Apellido Materno">
+					</div>
+					<div class="col-md-6 mb-3">
+						Seleccione el genero: <br>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" name="gender" type="radio" id="hombre" value="hombre" required="required" @if(isset($user) && $user->gender == "hombre") checked="checked" @endif>
+							<label class="form-check-label" for="hombre">Hombre</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" name="gender" type="radio" id="mujer" value="mujer" required="required" @if(isset($user) && $user->gender == "mujer") checked="checked" @endif>
+							<label class="form-check-label" for="mujer">Mujer</label>
+						</div>
+					</div>
 				</div>
+				<div class="form-row">
+					<div class="col-md-6 mb-3">
+						<label for="phone">Teléfono (Opcional)</label>
+						<input type="text" class="form-control" id="phone" name="phone" @if(isset($user)) value="{{ $user->phone }}" @endif placeholder="8165094">
+					</div>
+					<div class="col-md-6 mb-3">
+						<label for="cell">Celular (Opcional)</label>
+						<input type="text" class="form-control" id="cell" name="cell" @if(isset($user)) value="{{ $user->cell }}" @endif placeholder="2281909010">
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="col-md-6 mb-3">
+						<label for="email">Correo Electrónico</label>
+						<input type="email" class="form-control" id="email" name="email" @if(isset($user)) value="{{ $user->email }}" @endif placeholder="example@example.com" required>
+					</div>
+					<div class="col-md-6 mb-3">
+						<label for="password">Contraseña</label>
+						<input type="password" class="form-control" id="password" name="password" placeholder="Contraseña" required>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="col-md-6 mb-3">
+						<label for="position">Puesto</label>
+						<input type="text" class="form-control" id="position" name="position" @if(isset($user)) value="{{ $user->position }}" @endif placeholder="Director" required>
+					</div>
+					<div class="col-md-6 mb-3">
+						<label for="enterprise">Empresa</label>
+						<select class="form-control" id="enterprise" name="enterprise" multiple="multiple" data-validation="required">
+							@foreach(App\Enterprise::where('status','ACTIVE')->get() as $e)
+								<option value="{{ $e->id }}" @if(isset($user) && $user->enterprise_id == $e->id) selected="selected" @endif>{{ $e->name }}</option>
+							@endforeach
+						</select>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="col-md-6 mb-3">
+						<label for="department">Departamento</label>
+						<select class="form-control" id="department" name="department" multiple="multiple" data-validation="required">
+							@foreach(App\Departament::where('status','ACTIVE')->get() as $e)
+								<option value="{{ $e->id }}" @if(isset($user) && $user->departament_id == $e->id) selected="selected" @endif>{{ $e->name }}</option>
+							@endforeach
+						</select>
+					</div>
+					<div class="col-md-6 mb-3">
+						<label for="area">Area</label>
+						<select class="form-control" id="area" name="area" multiple="multiple" data-validation="required">
+							@foreach(App\Area::where('status','ACTIVE')->get() as $e)
+								<option value="{{ $e->id }}"@if(isset($user) && $user->area_id == $e->id) selected="selected" @endif>{{ $e->name }}</option>
+							@endforeach
+						</select>
+					</div>
+				</div>
+				<br>
+				<center>
+					<button type="submit" class="btn btn-success">@if(isset($user)) GUARDAR CAMBIOS @else REGISTRAR @endif</button>
+				</center>
 			</div>
 		</div>
-		<div class="form-row">
-			<div class="col-md-6 mb-3">
-				<label for="phone">Teléfono (Opcional)</label>
-				<input type="text" class="form-control" id="phone" name="phone" @if(isset($user)) value="{{ $user->phone }}" @endif placeholder="8165094">
-			</div>
-			<div class="col-md-6 mb-3">
-				<label for="cell">Celular (Opcional)</label>
-				<input type="text" class="form-control" id="cell" name="cell" @if(isset($user)) value="{{ $user->cell }}" @endif placeholder="2281909010">
-			</div>
-		</div>
-		<div class="form-row">
-			<div class="col-md-6 mb-3">
-				<label for="email">Correo Electrónico</label>
-				<input type="email" class="form-control" id="email" name="email" @if(isset($user)) value="{{ $user->email }}" @endif placeholder="example@example.com" required>
-			</div>
-			<div class="col-md-6 mb-3">
-				<label for="password">Contraseña</label>
-				<input type="password" class="form-control" id="password" name="password" placeholder="Contraseña" required>
-			</div>
-		</div>
-		<div class="form-row">
-			<div class="col-md-6 mb-3">
-				<label for="position">Puesto</label>
-				<input type="text" class="form-control" id="position" name="position" @if(isset($user)) value="{{ $user->position }}" @endif placeholder="Director" required>
-			</div>
-			<div class="col-md-6 mb-3">
-				<label for="enterprise">Empresa</label>
-				<select class="form-control" id="enterprise" name="enterprise" multiple="multiple" data-validation="required">
-					@foreach(App\Enterprise::where('status','ACTIVE')->get() as $e)
-						<option value="{{ $e->id }}" @if(isset($user) && $user->enterprise_id == $e->id) selected="selected" @endif>{{ $e->name }}</option>
-					@endforeach
-				</select>
-			</div>
-		</div>
-		<div class="form-row">
-			<div class="col-md-6 mb-3">
-				<label for="department">Departamento</label>
-				<select class="form-control" id="department" name="department" multiple="multiple" data-validation="required">
-					@foreach(App\Departament::where('status','ACTIVE')->get() as $e)
-						<option value="{{ $e->id }}" @if(isset($user) && $user->departament_id == $e->id) selected="selected" @endif>{{ $e->name }}</option>
-					@endforeach
-				</select>
-			</div>
-			<div class="col-md-6 mb-3">
-				<label for="area">Area</label>
-				<select class="form-control" id="area" name="area" multiple="multiple" data-validation="required">
-					@foreach(App\Area::where('status','ACTIVE')->get() as $e)
-						<option value="{{ $e->id }}"@if(isset($user) && $user->area_id == $e->id) selected="selected" @endif>{{ $e->name }}</option>
-					@endforeach
-				</select>
-			</div>
-		</div>
-		<br>
-		<center>
-			<button type="submit" class="btn btn-success">@if(isset($user)) GUARDAR CAMBIOS @else REGISTRAR @endif</button>
-		</center>
 	{!! Form::close() !!}
 	<p><br></p>
 	@if(isset($user))
