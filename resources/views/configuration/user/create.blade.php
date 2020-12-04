@@ -98,7 +98,7 @@
 						<label for="department">Departamento</label>
 						<select class="form-control" id="department" name="department" multiple="multiple" data-validation="required">
 							@foreach(App\Departament::where('status','ACTIVE')->get() as $e)
-								<option value="{{ $e->id }}" @if(isset($user) && $user->departament_id == $e->id) selected="selected" @endif>{{ $e->name }}</option>
+								<option value="{{ $e->id }}" @if(isset($user) && $user->department_id == $e->id) selected="selected" @endif>{{ $e->name }}</option>
 							@endforeach
 						</select>
 					</div>

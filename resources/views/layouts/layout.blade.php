@@ -14,6 +14,7 @@
 	
 	<link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
 	<link href="{{ asset('css/app.css') }}" rel="stylesheet">
+	<link href="{{ asset('css/apexcharts.css') }}" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="{{ asset('css/validator/theme-default.min.css') }}">
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
 
@@ -192,6 +193,7 @@
 	<script src="{{ asset('js/app.js') }}"></script>
  	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script src="{{ asset('js/validator/jquery.form-validator.min.js') }}"></script>
+	<script src="{{ asset('js/apexcharts.js') }}"></script>
 
 	
 	<script>

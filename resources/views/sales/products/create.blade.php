@@ -203,19 +203,21 @@
 						</button> 
 					</div>
 				</div>
-				<table class="table">
-					<thead class="text-align-center thead-dark">
-						<th>Producto</th>
-						<TH>Cantidad</TH>
-						<th>Precio</th>
-						<th>Subtotal</th>
-						<th>IVA</th>
-						<th>Descuento</th>
-						<th>Total</th>
-						<th>Acción</th>
-					</thead>
-					<tbody class="text-align-center" id="productSelected"></tbody>
-				</table>
+				<div class="table-responsive">
+					<table class="table">
+						<thead class="text-align-center thead-dark">
+							<th>Producto</th>
+							<TH>Cantidad</TH>
+							<th>Precio</th>
+							<th>Subtotal</th>
+							<th>IVA</th>
+							<th>Descuento</th>
+							<th>Total</th>
+							<th>Acción</th>
+						</thead>
+						<tbody class="text-align-center" id="productSelected"></tbody>
+					</table>
+				</div>
 			    <div class="row justify-content-end">
 			    	<div class="md-form col-4">
 			      		<label class="label-form" for="subtotal_all">Subtotal</label>

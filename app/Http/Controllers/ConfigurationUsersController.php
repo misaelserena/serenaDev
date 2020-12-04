@@ -151,10 +151,9 @@ class ConfigurationUsersController extends Controller
 		$user->email			= $request->email;
 		$user->password			= bcrypt($request->password);
 		$user->status			= "ACTIVE";
-		$user->role_id			= $request->role;
 		$user->enterprise_id	= $request->enterprise;
 		$user->area_id			= $request->area;
-		$user->departament_id	= $request->department;
+		$user->department_id	= $request->department;
 		$user->position			= $request->position;
 		$user->sys_user			= 1;
 		$user->save();
@@ -232,10 +231,9 @@ class ConfigurationUsersController extends Controller
 		$user->cell				= $request->cell;
 		$user->email			= $request->email;
 		$user->password			= bcrypt($request->password);
-		$user->role_id			= $request->role;
 		$user->enterprise_id	= $request->enterprise;
 		$user->area_id			= $request->area;
-		$user->departament_id	= $request->department;
+		$user->department_id	= $request->department;
 		$user->position			= $request->position;
 		$user->sys_user			= 1;
 		$user->save();
@@ -350,7 +348,7 @@ class ConfigurationUsersController extends Controller
 					foreach(App\Permission_role_dep::where('role_has_module_idrole_has_module',$mod->idrole_has_module)->get() as $permissionDep)
 					{
 						$edits.= "<span>".
-									"<input type='hidden' class='departments' name='departments_module_'".$request->module_father."'[]' value='".$permissionDep->departament_id."'>".
+									"<input type='hidden' class='departments' name='departments_module_'".$request->module_father."'[]' value='".$permissionDep->department_id."'>".
 									"</span>";
 					}
 				}
@@ -366,7 +364,7 @@ class ConfigurationUsersController extends Controller
 			$response = array();
 			$user	= App\User::find($request->user);
 			$response['enterprise'] = $user->inChargeEnt($request->module)->pluck('enterprise_id');
-			$response['department'] = $user->inChargeDep($request->module)->pluck('departament_id');
+			$response['department'] = $user->inChargeDep($request->module)->pluck('department_id');
 			return Response($response);
 		}
 	}
@@ -411,7 +409,7 @@ class ConfigurationUsersController extends Controller
 						{
 							$depM										= new App\Permission_user_dep();
 							$depM->user_has_module_iduser_has_module	= $UHM->iduser_has_module;
-							$depM->departament_id						= $dep;
+							$depM->department_id						= $dep;
 							$depM->save();
 						}
 					}

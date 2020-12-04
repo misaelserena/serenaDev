@@ -7,150 +7,298 @@
 	<meta name="csrf-token" content="{{ csrf_token() }}">
 	<title>SERENA DEV</title>
 	<link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}">
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 
 	<style type="text/css">
-		/* Made with love by Mutiullah Samim*/
-
-		@import url('https://fonts.googleapis.com/css?family=Numans');
-
-		html,body{
-		/* background-image: url('http://getwallpapers.com/wallpaper/full/a/5/d/544750.jpg');*/
-		background-size: cover;
-		background-repeat: no-repeat;
-		height: 100%;
-		font-family: 'Numans', sans-serif;
-		background: #303734;
-		}
-
-		.container{
-		height: 100%;
-		align-content: center;
-		}
-
-		.card{
-		height: 370px;
-		margin-top: auto;
-		margin-bottom: auto;
-		width: 400px;
-		background-color: rgba(0,0,0,0.5) !important;
-		}
-
-		.social_icon span{
-		font-size: 60px;
-		margin-left: 10px;
-		color: #FFF;
-		}
-
-		.social_icon span:hover{
-		color: white;
-		cursor: pointer;
-		}
-
-		.card-header h3{
-		color: white;
-		}
-
-		.social_icon{
-		position: absolute;
-		right: 20px;
-		top: -45px;
-		}
-
-		.input-group-prepend span{
-		width: 50px;
-		background-color: #4376B7;
-		color: white;
-		border:0 !important;
-		}
-
-		input:focus{
-		outline: 0 0 0 0  !important;
-		box-shadow: 0 0 0 0 !important;
-
-		}
-
-		.remember{
-		color: white;
-		}
-
-		.remember input
+		html 
 		{
-		width: 20px;
-		height: 20px;
-		margin-left: 15px;
-		margin-right: 5px;
+			background-color	: #17847f;
 		}
 
-		.login_btn{
-		color: white;
-		background-color: #4376B7;
-		width: 100px;
+		body 
+		{
+			font-family	: "Poppins", sans-serif;
+			height		: 100vh;
 		}
 
-		.login_btn:hover{
-		color: black;
-		background-color: white;
+		a 
+		{
+			color			: #92badd;
+			display			:inline-block;
+			text-decoration	: none;
+			font-weight		: 400;
 		}
 
-		.links{
-		color: white;
+		h2 
+		{
+			text-align		: center;
+			font-size		: 16px;
+			font-weight		: 600;
+			text-transform	: uppercase;
+			display			:inline-block;
+			margin			: 40px 8px 10px 8px; 
+			color			: #cccccc;
 		}
 
-		.links a{
-		margin-left: 4px;
+		.wrapper 
+		{
+			display			: flex;
+			align-items		: center;
+			flex-direction	: column; 
+			justify-content	: center;
+			width			: 100%;
+			min-height		: 100%;
+			padding			: 20px;
+		}
+
+		#formContent 
+		{
+			-webkit-border-radius	: 10px 10px 10px 10px;
+			border-radius			: 10px 10px 10px 10px;
+			background				: #fff;
+			padding					: 30px;
+			width					: 90%;
+			max-width				: 450px;
+			position				: relative;
+			padding					: 0px;
+			-webkit-box-shadow		: 0 30px 60px 0 rgba(0,0,0,0.3);
+			box-shadow				: 0 30px 60px 0 rgba(0,0,0,0.3);
+			text-align				: center;
+		}
+
+		#formFooter 
+		{
+			background-color		: #f6f6f6;
+			border-top				: 1px solid #dce8f1;
+			padding					: 25px;
+			text-align				: center;
+			-webkit-border-radius	: 0 0 10px 10px;
+			border-radius			: 0 0 10px 10px;
+		}
+
+		h2.inactive 
+		{
+			color	: #cccccc;
+		}
+
+		h2.active 
+		{
+			color			: #0d0d0d;
+			border-bottom	: 2px solid #5fbae9;
+		}
+
+		.btn-login  
+		{
+			background-color		: #56baed;
+			border					: none;
+			color					: white;
+			padding					: 15px 80px;
+			text-align				: center;
+			text-decoration			: none;
+			display					: inline-block;
+			text-transform			: uppercase;
+			font-size				: 13px;
+			-webkit-box-shadow		: 0 10px 30px 0 rgba(95,186,233,0.4);
+			box-shadow				: 0 10px 30px 0 rgba(95,186,233,0.4);
+			-webkit-border-radius	: 5px 5px 5px 5px;
+			border-radius			: 5px 5px 5px 5px;
+			margin					: 5px 20px 40px 20px;
+			-webkit-transition		: all 0.3s ease-in-out;
+			-moz-transition			: all 0.3s ease-in-out;
+			-ms-transition			: all 0.3s ease-in-out;
+			-o-transition			: all 0.3s ease-in-out;
+			transition				: all 0.3s ease-in-out;
+		}
+
+		.btn-login:hover  
+		{
+			background-color	: #39ace7;
+		}
+
+		.btn-login:active  
+		{
+			-moz-transform		: scale(0.95);
+			-webkit-transform	: scale(0.95);
+			-o-transform		: scale(0.95);
+			-ms-transform		: scale(0.95);
+			transform			: scale(0.95);
+		}
+
+		.input-login 
+		{
+			background-color		: #f6f6f6;
+			border					: none;
+			color					: #0d0d0d;
+			padding					: 15px 32px;
+			text-align				: center;
+			text-decoration			: none;
+			display					: inline-block;
+			font-size				: 16px;
+			margin					: 5px;
+			width					: 85%;
+			border					: 2px solid #f6f6f6;
+			-webkit-transition		: all 0.5s ease-in-out;
+			-moz-transition			: all 0.5s ease-in-out;
+			-ms-transition			: all 0.5s ease-in-out;
+			-o-transition			: all 0.5s ease-in-out;
+			transition				: all 0.5s ease-in-out;
+			-webkit-border-radius	: 5px 5px 5px 5px;
+			border-radius			: 5px 5px 5px 5px;
+		}
+
+		.input-login:focus 
+		{
+			background-color	: #fff;
+			border-bottom		: 2px solid #5fbae9;
+		}
+
+		.input-login:placeholder 
+		{
+			color	: #cccccc;
+		}
+
+		.fadeInDown 
+		{
+			-webkit-animation-name		: fadeInDown;
+			animation-name				: fadeInDown;
+			-webkit-animation-duration	: 1s;
+			animation-duration			: 1s;
+			-webkit-animation-fill-mode	: both;
+			animation-fill-mode			: both;
+		}
+
+		@-webkit-keyframes fadeInDown 
+		{
+			0% 
+			{
+				opacity				: 0;
+				-webkit-transform	: translate3d(0, -100%, 0);
+				transform			: translate3d(0, -100%, 0);
+			}
+			100% 
+			{
+				opacity				: 1;
+				-webkit-transform	: none;
+				transform			: none;
+			}
+		}
+
+		@keyframes fadeInDown 
+		{
+			0% 
+			{
+				opacity				: 0;
+				-webkit-transform	: translate3d(0, -100%, 0);
+				transform			: translate3d(0, -100%, 0);
+			}
+			100% 
+			{
+				opacity				: 1;
+				-webkit-transform	: none;
+				transform			: none;
+			}
+		}
+
+		/* Simple CSS3 Fade-in Animation */
+		@-webkit-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+		@-moz-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+		@keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+
+		.fadeIn 
+		{
+			opacity:0;
+			-webkit-animation:fadeIn ease-in 1;
+			-moz-animation:fadeIn ease-in 1;
+			animation:fadeIn ease-in 1;
+			
+			-webkit-animation-fill-mode:forwards;
+			-moz-animation-fill-mode:forwards;
+			animation-fill-mode:forwards;
+			
+			-webkit-animation-duration:1s;
+			-moz-animation-duration:1s;
+			animation-duration:1s;
+		}
+
+		.fadeIn.first 
+		{
+			-webkit-animation-delay	: 0.4s;
+			-moz-animation-delay	: 0.4s;
+			animation-delay			: 0.4s;
+		}
+
+		.fadeIn.second 
+		{
+			-webkit-animation-delay	: 0.6s;
+			-moz-animation-delay	: 0.6s;
+			animation-delay			: 0.6s;
+		}
+
+		.fadeIn.third 
+		{
+			-webkit-animation-delay	: 0.8s;
+			-moz-animation-delay	: 0.8s;
+			animation-delay			: 0.8s;
+		}
+
+		.fadeIn.fourth 
+		{
+			-webkit-animation-delay	: 1s;
+			-moz-animation-delay	: 1s;
+			animation-delay			: 1s;
+		}
+
+		.underlineHover:after 
+		{
+			display				: block;
+			left				: 0;
+			bottom				: -10px;
+			width				: 0;
+			height				: 2px;
+			background-color	: #56baed;
+			content				: "";
+			transition			: width 0.2s;
+		}
+
+		.underlineHover:hover 
+		{
+			color	: #0d0d0d;
+		}
+
+		.underlineHover:hover:after
+		{
+			width	: 100%;
+		}
+
+		*:focus 
+		{
+			outline	: none;
+		} 
+
+		#icon {
+			width	:60%;
 		}
 	</style>
 </head> 
-<body><br><br>
-	<div class="container">
-		<form method="POST" action="{{ route('login') }}" class="login-form">
-			@csrf
-			<div class="d-flex justify-content-center h-100">
-				<div class="card">
-					<div class="card-header">
-						<h3>Sign In</h3>
-						<div class="d-flex justify-content-end social_icon">
-							<span><i class="fab fa-facebook-square"></i></span>
-							<span><i class="fab fa-google-plus-square"></i></span>
-						</div>
-					</div>
-					<div class="card-body">
-						<form>
-							<div class="input-group form-group">
-								<div class="input-group-prepend">
-									<span class="input-group-text"><i class="fas fa-user"></i></span>
-								</div>
-								<input type="text" placeholder="username" class="form-control {{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required autofocus>
-								
-							</div>
-							<div class="input-group form-group">
-								<div class="input-group-prepend">
-									<span class="input-group-text"><i class="fas fa-key"></i></span>
-								</div>
-								<input placeholder="Contraseña" id="password" class="form-control {{ $errors->has('password') ? ' is-invalid' : '' }}" type="password" name="password" required/>
-							   	@if ($errors->has('password'))
-									<span class="invalid-feedback">
-										<strong>{{ $errors->first('password') }}</strong>
-									</span>
-								@endif
-							</div>
-							<div class="row align-items-center remember">
-								<input type="checkbox" {{ old('remember') ? 'checked' : '' }}>Recordar datos
-							</div>
-							<div class="form-group">
-								<input type="submit" value="Iniciar" class="btn float-right login_btn">
-							</div>
-						</form>
-					</div>
-					<div class="card-footer">
-						<div class="d-flex justify-content-center">
-							<a style="color: white;" href="{{ route('password.request') }}">¿Olvidaste la contrase&ntilde;a?</a>
-						</div>
-					</div>
-				</div>
+<body>
+	<div class="wrapper fadeInDown">
+	  	<div id="formContent">
+		    <div class="fadeIn first">
+		      	<img src="{{ asset('images/logo-serena.png') }}" id="icon" alt="User Icon" />
+		    </div>
+			<form method="POST" action="{{ route('login') }}">
+				@csrf
+		  		<input type="text" id="login" class="input-login fadeIn second" name="email" placeholder="Correo Electrónico">
+		  		<input type="password" id="password" class="input-login fadeIn third" name="password" placeholder="Contraseña">
+	  			
+				<br>
+				<input type="checkbox" {{ old('remember') ? 'checked' : '' }}>Recordar datos
+				<br>
+		  		<input type="submit" class="btn-login fadeIn fourth" value="Ingresar">
+			</form>
+			<div id="formFooter">
+		 		<a class="underlineHover" href="#">¿Olvidaste tu contraseña?</a>
 			</div>
-		</form>
+	  	</div>
 	</div>
 </body>
 </html>

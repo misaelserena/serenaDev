@@ -161,6 +161,19 @@ Route::group(['middleware' => ['permission:16']], function ()
 
 });
 
+/*
+|--------------------------------------------------------------------------
+| Sales Product Report Routes
+|--------------------------------------------------------------------------
+*/
+Route::group(['middleware' => ['permission:4']], function()
+{
+	Route::get('/reports','ReportAdministrationController@index')->name('reports.index');
+	Route::get('/reports/administration','ReportAdministrationController@administration')->name('reports.administration');
+	Route::get('/reports/administration/sales','ReportAdministrationController@reportSales')->name('reports.administration.sales');
+});
+
+
 
 
 /*
