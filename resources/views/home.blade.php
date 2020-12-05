@@ -8,7 +8,7 @@
 			<div id="principal">
 				<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
 				<h1 class="h2">
-					<img width="30%" src="{{ asset('images/logo-serena.png') }}">
+					<!--img width="30%" src="{{ asset('images/banner.png') }}"-->
 				</h1>
 				<div class="btn-toolbar mb-2 mb-md-0">
 				  <div class="btn-group mr-2">

@@ -1,5 +1,22 @@
 @extends('layouts.child_module')
 
+@section('css')
+	<style type="text/css">
+		.content-chart
+		{
+			display			: flex;
+			flex-wrap		: wrap;
+			max-width		: 100%;
+			flex-direction	: row;
+		}
+		.chart
+		{
+			padding		: 10px;
+			width		: 495px;
+			max-width	: 100%;
+		}
+	</style>
+@endsection
 @section('data')
 	{!! Form::open(['route' => 'reports.administration.sales', 'method' => 'GET']) !!}	
 		<div class="card">
@@ -83,9 +100,16 @@
 				'client_id' 	=> $client_id
 				])->render() }}
 		</center>
-
-		<div id="chart">
-			
+		<p><br></p>	
+		<div class="card">
+			<div class="card-header text-white bg-green">
+				GRÁFICAS
+				<p>A continuación se muestra un resumen de las ventas del año y la cantidad de producto vendidos</p>
+			</div>
+		</div>
+		<div class="content-chart">
+			<div class="chart chart_sales_year"></div>
+			<div class="chart chart_sales_product"></div>
 		</div>
 	@else
 		<div class="alert alert-danger" role="alert">Resultado no encontrado</div>
@@ -103,45 +127,8 @@
 		});
 		$(document).ready(function()
 		{
-			  var options = {
-		          series: [{
-		            name: "Ventas",
-		            data: [
-		            	@foreach($salesForMonth as $countSale)
-		            		{{ $countSale }},
-		            	@endforeach
-		            ]
-		        }],
-		          chart: {
-		          height: 350,
-		          type: 'line',
-		          zoom: {
-		            enabled: false
-		          }
-		        },
-		        dataLabels: {
-		          enabled: false
-		        },
-		        stroke: {
-		          curve: 'straight'
-		        },
-		        title: {
-		          text: 'Ventas por mes',
-		          align: 'left'
-		        },
-		        grid: {
-		          row: {
-		            colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
-		            opacity: 0.5
-		          },
-		        },
-		        xaxis: {
-		          categories: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep','Oct','Nov','Dic'],
-		        }
-		        };
-
-		        var chart = new ApexCharts(document.querySelector("#chart"), options);
-		        chart.render();
+			chartTotalSales();
+			chartTotalProductSold();
 			$(function() 
 			{
 				$("#mindate,#maxdate").datepicker({ dateFormat: "yy-mm-dd" });
@@ -159,5 +146,165 @@
 				width 					: "100%"
 			});
 		});
+
+		function chartTotalProductSold()
+		{
+			var options = 
+			{
+			  	series: [{
+				  	name: 'Total',
+				  	data: 
+					[
+						@foreach($productSold['total'] as $total)
+							{{ $total }},
+						@endforeach
+					]
+				}],
+				chart: 
+				{
+				  	height: 350,
+				  	type: 'bar',
+				},
+				plotOptions: 
+				{
+				  	bar: 
+				  	{
+						dataLabels: 
+						{
+					  		position: 'center', // top, center, bottom
+						},
+				  	}
+				},
+				dataLabels: 
+				{
+				  	enabled: true,
+				  	offsetY: 0,
+				  	style: 
+				  	{
+						fontSize: '12px',
+						colors: ["#fff"]
+				  	}
+				},
+			
+				xaxis: 
+				{
+				  	categories: [
+						@foreach($productSold['name'] as $name)
+							'{{ $name }}',
+						@endforeach
+				  	],
+				  	axisBorder: 
+				  	{
+						show: false
+				  	},
+				  	axisTicks: 
+				  	{
+						show: false
+				  	},
+				  	crosshairs: 
+				  	{
+						fill: 
+						{
+						  	type: 'gradient',
+						  	gradient: 
+						  	{
+								colorFrom: '#D8E3F0',
+								colorTo: '#BED1E6',
+								stops: [0, 100],
+								opacityFrom: 0.4,
+								opacityTo: 0.5,
+						  	}
+						}
+				  	},
+				  	tooltip: 
+				  	{
+						enabled: true,
+				  	}
+				},
+				yaxis: 
+				{
+					axisBorder: 
+					{
+						show: false
+					},
+					axisTicks: 
+					{
+						show: false,
+					},
+				
+				},
+				title: 
+				{
+					text: 'Total de Productos Vendidos',
+					floating: true,
+					offsetY: 0,
+					style: 
+					{
+						color: '#444'
+					}
+				}
+			};
+
+			var chart = new ApexCharts(document.querySelector(".chart_sales_product"), options);
+			chart.render();
+		}
+
+		function chartTotalSales()
+		{
+			var options = 
+			{
+			  	series: 
+			  	[{
+					name: "Ventas",
+					data: 
+					[
+						@foreach($salesForMonth as $countSale)
+							{{ $countSale }},
+						@endforeach
+					]
+				}],
+			  	chart: 
+			  	{
+				  	height: 350,
+				  	type: 'line',
+				  	zoom: 
+				  	{
+						enabled: false
+				 	}
+				},
+				dataLabels: 
+				{
+			  		enabled: false
+				},
+				stroke: 
+				{
+			  		curve: 'straight'
+				},
+				markers: 
+				{
+					size: 4,
+				},
+				title: 
+				{
+			  		text: 'Ventas Por Mes',
+			  		align: 'left'
+				},
+				grid: 
+				{
+				  	row: 
+				  	{
+						colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+						opacity: 0.5
+				  	},
+				},
+				xaxis: 
+				{
+			  		categories: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep','Oct','Nov','Dic'],
+				}
+			};
+
+			var chart = new ApexCharts(document.querySelector(".chart_sales_year"), options);
+			chart.render();
+		}
 	</script>
 @endsection

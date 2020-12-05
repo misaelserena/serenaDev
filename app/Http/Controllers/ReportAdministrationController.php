@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\URL;
 use App\Sales;
 use App\Module;
+use App\Products;
 use Alert;
 use Auth;
 
@@ -63,11 +64,19 @@ class ReportAdministrationController extends Controller
 				})
 				->orderBy('id','DESC')
 				->paginate(5);
+				
 
 		$salesForMonth = [];
 		for ($i=1; $i < 13; $i++) 
 		{ 
 			$salesForMonth[$i] = Sales::whereMonth('created_at',$i)->count();
+		}
+
+		$productSold = [];
+		foreach (Products::all() as $key => $product) 
+		{
+			$productSold['name'][$key] 	= $product->description;
+			$productSold['total'][$key] = $product->totalSold();
 		}
 
 		return view('report.administration.sales',
@@ -82,7 +91,8 @@ class ReportAdministrationController extends Controller
 				'maxdate'		=> $request->maxdate,
 				'product_id'	=> $request->product_id,
 				'client_id'		=> $request->client_id,
-				'salesForMonth' => $salesForMonth
+				'salesForMonth' => $salesForMonth,
+				'productSold' 	=> $productSold
 			]);
 	}
 

@@ -32,4 +32,9 @@ class Products extends Model
 	{
 		return $query->orderBy('description','asc');
 	}
+
+	public function totalSold()
+	{
+		return $this->hasMany('App\SalesDetail','products_id','id')->sum('quantity');
+	}
 }
