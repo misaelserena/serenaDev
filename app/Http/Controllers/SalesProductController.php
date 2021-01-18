@@ -11,6 +11,7 @@ use App\Sales;
 use App\SalesDetail;
 use App\Client;
 use App\Products;
+use App\Warehouse;
 use Alert;
 use Auth;
 use PDF;
@@ -72,6 +73,15 @@ class SalesProductController extends Controller
 				$detail->total			= $request->total[$i];
 				$detail->sales_id		= $sales->id;
 				$detail->save();
+
+				$idWarehouse = Warehouse::where('product_id',$request->product_id[$i])->where('status',1)->first()->id;
+
+				if ($idWarehouse) 
+				{
+					$update 				= Warehouse::find($idWarehouse);
+					$update->quantity_ex 	= $update->quantity_ex-$request->quantity[$i];
+					$update->save();
+				}
 
 			}
 

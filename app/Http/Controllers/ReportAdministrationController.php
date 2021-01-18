@@ -96,5 +96,17 @@ class ReportAdministrationController extends Controller
 			]);
 	}
 
+	public function inputsOutputs(Request $request)
+	{
+		$data 	= Module::find(31);
+		return view('report.administration.inputs_outputs',
+			[
+				'id'			=> $data['father'],
+				'title'			=> $data['name'],
+				'details'		=> $data['details'],
+				'child_id'		=> 28,
+				'option_id'		=> 31
+			]);
+	}
 
 }

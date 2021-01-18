@@ -31,7 +31,7 @@ class ConfigurationProductController extends Controller
     public function create()
     {
 		$data = App\Module::find($this->module_father);
-		return view('configuration.product.create',
+		return view('configuration.product_price.create',
 			[
 				'id'		=>	$data['father'],
 				'title'		=>	$data['name'],
@@ -49,8 +49,7 @@ class ConfigurationProductController extends Controller
 		$product->net_content				= $request->net_content;
 		$product->unit						= $request->unit;
 		$product->price						= $request->price;
-		$product->provider_id				= $request->provider_id;
-		$product->min_wholesale_quantity	= $request->min_wholesale_quantity;
+		$product->price_purchase			= $request->price_purchase;
 		$product->wholesale_price			= $request->wholesale_price;
 		$product->users_id					= Auth::user()->id;
 		$product->status					= 1;
@@ -58,7 +57,7 @@ class ConfigurationProductController extends Controller
 
 		$alert = "swal('','Producto Registrado Exitosamente','success')";
 
-		return redirect()->route('configuration.product.show',$product->id)->with('alert',$alert);
+		return redirect()->route('configuration.product_price.show',$product->id)->with('alert',$alert);
 	}
 
 	public function edit(Request $request)
@@ -66,8 +65,7 @@ class ConfigurationProductController extends Controller
 		$data			= App\Module::find($this->module_father);
 		$description	= $request->description;
 		$code			= $request->code;
-		$provider_id	= $request->provider_id;
-		$products 	 	= App\Products::where(function($query) use ($description,$code,$provider_id)
+		$products 	 	= App\Products::where(function($query) use ($description,$code)
 					{
 						if ($description != "") 
 						{
@@ -77,14 +75,10 @@ class ConfigurationProductController extends Controller
 						{
 							$query->where('code','LIKE','%'.$code.'%');
 						}
-						if ($provider_id != "") 
-						{
-							$query->whereIn('provider_id',$provider_id);
-						}
 					})
 					->paginate(10);
 
-		return view('configuration.product.search',
+		return view('configuration.product_price.search',
 			[
 				'id'			=> $data['father'],
 				'title'			=> $data['name'],
@@ -93,7 +87,6 @@ class ConfigurationProductController extends Controller
 				'option_id'		=> $this->module_edit,
 				'description'	=> $description,
 				'code'			=> $code,
-				'provider_id'	=> $provider_id,
 				'products'		=> $products,
 			]);
 	}
@@ -104,7 +97,7 @@ class ConfigurationProductController extends Controller
 		$product	= App\Products::find($id);
 		if($product != "")
 		{
-			return view('configuration.product.create',
+			return view('configuration.product_price.create',
 				[
 					'id'					=> $data['father'],
 					'title'					=> $data['name'],
@@ -128,8 +121,7 @@ class ConfigurationProductController extends Controller
 		$product->net_content				= $request->net_content;
 		$product->unit						= $request->unit;
 		$product->price						= $request->price;
-		$product->provider_id				= $request->provider_id;
-		$product->min_wholesale_quantity	= $request->min_wholesale_quantity;
+		$product->price_purchase			= $request->price_purchase;
 		$product->wholesale_price			= $request->wholesale_price;
 		$product->users_id					= Auth::user()->id;
 		$product->status					= 1;
@@ -137,7 +129,7 @@ class ConfigurationProductController extends Controller
 
 		$alert = "swal('','Producto Actualizado Exitosamente','success')";
 
-		return redirect()->route('configuration.product.show',$product->id)->with('alert',$alert);
+		return redirect()->route('configuration.product_price.show',$product->id)->with('alert',$alert);
 	}
 
 	public function delete($id)
@@ -148,7 +140,7 @@ class ConfigurationProductController extends Controller
 
 		$alert = "swal('','Producto dado de baja exitosamente','success')";
 
-		return redirect()->route('configuration.product.edit')->with('alert',$alert);
+		return redirect()->route('configuration.product_price.edit')->with('alert',$alert);
 	}
 
 }

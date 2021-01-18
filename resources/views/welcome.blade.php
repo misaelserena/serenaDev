@@ -64,8 +64,8 @@
 		{
 			padding-top				: 10rem;
 			padding-bottom			: calc(10rem - 4.5rem);
-			background				: -webkit-gradient(linear, left top, left bottom, from(rgba(92, 77, 66, 0.8)), to(rgba(92, 77, 66, 0.8))), url(/images/wallpaper_index.jpg?d4c0f161b973fd57fecaed365a4b51dd);
-			background				: linear-gradient(to bottom, rgba(92, 77, 66, 0.8) 0%, rgba(92, 77, 66, 0.8) 100%), url({{ asset('images/wallpaper_index.jpg?d4c0f161b973fd57fecaed365a4b51dd') }});
+			background				: -webkit-gradient(linear, left top, left bottom, from(rgba(92, 77, 66, 0.8)), to(rgba(92, 77, 66, 0.8))), url(/images/online-web-design.jpg?d4c0f161b973fd57fecaed365a4b51dd);
+			background				: linear-gradient(to bottom, rgba(92, 77, 66, 0.8) 0%, rgba(7, 7, 30, 0.8) 0%), url({{ asset('images/online-web-design.jpg?d4c0f161b973fd57fecaed365a4b51dd') }});
 			background-position		: center;
 			background-repeat		: no-repeat;
 			background-attachment	: scroll;
@@ -79,22 +79,23 @@
 			<div class="container h-100">
 				<div class="row h-100 align-items-center justify-content-center text-center">
 					<div class="col-lg-10 align-self-end">
-						<h1 class="text-uppercase text-white font-weight-bold">FOTO SERENA</h1>
+						<img class="img-fluid" src="{{ asset('images/logo_cafe_plato.png') }}" alt="" width="20%" />
 						<hr class="divider my-4" />
 					</div>
 					<div class="col-lg-8 align-self-baseline">
-						<p class="text-white-75 font-weight-light mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-						quis nostrud exercitation ullamco laboris nisi ut aliquip ex.</p>
-						<a class="btn btn-orange btn-xl js-scroll-trigger" href="#about">
-							PRÓXIMAMENTE
+						<p class="text-white-75 font-weight-light mb-5" style="color: white;">
+							Mi nombre es Misael Serena, soy Ingeniero en Sistemas, creo aplicaciones web.
+						</p>
+						<a class="btn btn-xl js-scroll-trigger" href="#about"  style="background: #00a5f5; color: white
+						;">
+							BIENVENIDO
 						</a>
 					</div>
 				</div>
 			</div>
 		</header>
 		<!-- Services-->
-		<section class="page-section" id="services">
+		<!--section class="page-section" id="services">
 			<div class="container">
 				<h2 class="text-center mt-0">NUESTROS SERVICIOS</h2>
 				<hr class="divider my-4" />
@@ -102,8 +103,8 @@
 					<div class="col-lg-3 col-md-6 text-center">
 						<div class="mt-5">
 							<i class="fas fa-4x fa-gem text-primary mb-4"></i>
-							<h3 class="h4 mb-2">Fotografía para trámites</h3>
-							<p class="text-muted mb-0">Manejamos diferentes tamaños de fotografía, dependiente del trámite que vayas a realizar</p>
+							<h3 class="h4 mb-2">Páginas web</h3>
+							<p class="text-muted mb-0">Realizo páginas web responsive a la medida del cliente.</p>
 						</div>
 					</div>
 					<div class="col-lg-3 col-md-6 text-center">
@@ -129,62 +130,62 @@
 					</div>
 				</div>
 			</div>
-		</section>
+		</section-->
 		<!-- Portfolio-->
 		<div id="portfolio">
 			<div class="container-fluid p-0">
 				<div class="row no-gutters">
 					<div class="col-lg-4 col-sm-6">
-						<a class="portfolio-box" href="{{ asset('img/portfolio/fullsize/1.jpg') }}">
-							<img class="img-fluid" src="{{ asset('img/portfolio/thumbnails/1.jpg') }}" alt="" />
+						<a class="portfolio-box" href="{{ asset('images/projects/project1/p1_1.png') }}">
+							<img class="img-fluid" src="{{ asset('images/projects/project1/p1_1.png') }}" alt="" />
 							<div class="portfolio-box-caption">
-								<div class="project-category text-white-50">Category</div>
-								<div class="project-name">Project Name</div>
+								<div class="project-category text-white-50"></div>
+								<div class="project-name">Página de Inicio de Sistema Web</div>
 							</div>
 						</a>
 					</div>
 					<div class="col-lg-4 col-sm-6">
-						<a class="portfolio-box" href="{{ asset('img/portfolio/fullsize/2.jpg') }}">
-							<img class="img-fluid" src="{{ asset('img/portfolio/thumbnails/2.jpg') }}" alt="" />
+						<a class="portfolio-box" href="{{ asset('images/projects/project1/p1_2.png') }}">
+							<img class="img-fluid" src="{{ asset('images/projects/project1/p1_2.png') }}" alt="" />
 							<div class="portfolio-box-caption">
-								<div class="project-category text-white-50">Category</div>
-								<div class="project-name">Project Name</div>
+								<div class="project-category text-white-50"></div>
+								<div class="project-name">Listado de Módulos para Sistema Web</div>
 							</div>
 						</a>
 					</div>
 					<div class="col-lg-4 col-sm-6">
-						<a class="portfolio-box" href="{{ asset('img/portfolio/fullsize/3.jpg') }}">
-							<img class="img-fluid" src="{{ asset('img/portfolio/thumbnails/3.jpg') }}" alt="" />
+						<a class="portfolio-box" href="{{ asset('images/projects/project1/p1_3.png') }}">
+							<img class="img-fluid" src="{{ asset('images/projects/project1/p1_3.png') }}" alt="" />
 							<div class="portfolio-box-caption">
-								<div class="project-category text-white-50">Category</div>
-								<div class="project-name">Project Name</div>
+								<div class="project-category text-white-50"></div>
+								<div class="project-name">Gráficas</div>
 							</div>
 						</a>
 					</div>
 					<div class="col-lg-4 col-sm-6">
-						<a class="portfolio-box" href="{{ asset('img/portfolio/fullsize/4.jpg') }}">
-							<img class="img-fluid" src="{{ asset('img/portfolio/thumbnails/4.jpg') }}" alt="" />
+						<a class="portfolio-box" href="{{ asset('images/projects/project2/p2_5.png') }}">
+							<img class="img-fluid" src="{{ asset('images/projects/project2/p2_5.png') }}" alt="" />
 							<div class="portfolio-box-caption">
-								<div class="project-category text-white-50">Category</div>
-								<div class="project-name">Project Name</div>
+								<div class="project-category text-white-50"></div>
+								<div class="project-name">Formularios</div>
 							</div>
 						</a>
 					</div>
 					<div class="col-lg-4 col-sm-6">
-						<a class="portfolio-box" href="{{ asset('img/portfolio/fullsize/5.jpg') }}">
-							<img class="img-fluid" src="{{ asset('img/portfolio/thumbnails/5.jpg') }}" alt="" />
-							<div class="portfolio-box-caption">
-								<div class="project-category text-white-50">Category</div>
-								<div class="project-name">Project Name</div>
-							</div>
-						</a>
-					</div>
-					<div class="col-lg-4 col-sm-6">
-						<a class="portfolio-box" href="{{ asset('img/portfolio/fullsize/6.jpg') }}">
-							<img class="img-fluid" src="{{ asset('img/portfolio/thumbnails/6.jpg') }}" alt="" />
+						<a class="portfolio-box" href="{{ asset('images/projects/project3/p3_1.png') }}">
+							<img class="img-fluid" src="{{ asset('images/projects/project3/p3_1.png') }}" alt="" />
 							<div class="portfolio-box-caption p-3">
-								<div class="project-category text-white-50">Category</div>
-								<div class="project-name">Project Name</div>
+								<div class="project-category text-white-50"></div>
+								<div class="project-name">Página para Empresa Privada</div>
+							</div>
+						</a>
+					</div>
+					<div class="col-lg-4 col-sm-6">
+						<a class="portfolio-box" href="{{ asset('images/projects/project4/p4_1.png') }}">
+							<img class="img-fluid" src="{{ asset('images/projects/project4/p4_1.png') }}" alt="" />
+							<div class="portfolio-box-caption">
+								<div class="project-category text-white-50"></div>
+								<div class="project-name">Página de Escuela</div>
 							</div>
 						</a>
 					</div>
@@ -192,19 +193,19 @@
 			</div>
 		</div>
 		<!-- About-->
-		<section class="page-section container-orange" id="about">
+		<!--section class="page-section container-blue" id="about">
 			<div class="container">
 				<div class="row justify-content-center">
 					<div class="col-lg-8 text-center">
-						<h2 class="text-white mt-0">CONOCENOS!</h2>
+						<h2 class="text-white mt-0" style="color: white !important;">CONOCENOS!</h2>
 						<hr class="divider light my-4" />
-						<p class="text-white-50 mb-4">
+						<p class="text-white-50 mb-4" style="color: white !important;">
 							Somos un negocio dedicado a la fotografia, siempre cumpliendo con las expectivas que tienen nuestros clientes sobre nosotros, nos respalda nuestro trabajo con más de 25 años en la ciudad de Coatepec, Veracruz.
 						</p>
 					</div>
 				</div>
 			</div>
-		</section>
+		</section-->
 		<!-- Contact-->
 		<section class="page-section" id="contact">
 			<div class="container">
@@ -216,15 +217,15 @@
 							<form class="text-left">
 								<div class="form-group">
 									<label for="name">Nombre</label>
-									<input type="text" class="form-control" id="name" placeholder="Ej. Esperanza Serena..">
+									<input type="text" class="form-control" id="name" placeholder="Escriba su nombre.">
 								</div>
 								<div class="form-group">
 									<label for="mail">Correo Electrónico</label>
 									<input type="email" class="form-control" id="mail" placeholder="ejemplo@ejemplo.com">
 								</div>
 								<div class="form-group">
-									<label for="content">Correo Electrónico</label>
-									<textarea id="content" class="form-control"></textarea>
+									<label for="content">Mensaje</label>
+									<textarea placeholder="Escriba su mensaje aquí" id="content" class="form-control"></textarea>
 								</div>
 								<center>
 									<input type="submit" name="send" class="btn btn-primary" value="Contactar">
@@ -236,7 +237,7 @@
 				<div class="row">
 					<div class="col-lg-4 ml-auto text-center mb-5 mb-lg-0">
 						<i class="fas fa-phone fa-3x mb-3 text-muted"></i>
-						<div>Tel: (228)8 16 50 94</div>
+						<div>Tel: (228)3 40 15 69</div>
 					</div>
 					<div class="col-lg-4 mr-auto text-center">
 						<i class="fas fa-envelope fa-3x mb-3 text-muted"></i>
@@ -248,6 +249,6 @@
 		</section>
 		<!-- Footer-->
 		<footer class="bg-light py-5">
-			<div class="container"><div class="small text-center text-muted">Copyright © 2020 - Serena Dev</div></div>
+			<div class="container"><div class="small text-center text-muted">Copyright © 2021 - Serena Dev</div></div>
 		</footer>
 @endsection

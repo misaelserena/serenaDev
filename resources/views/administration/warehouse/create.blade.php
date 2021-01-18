@@ -13,39 +13,60 @@
 			</div>
 			<div class="card-body">
 				<div class="form-row">
+					<div class="md-form col-md-6 mb-3">
+						<i class="fas fa-cubes prefix"></i>
+						<label class="label-form" for="product">Cantidad a Ingresar</label>
+						<input type="text" class="form-control" id="product" name="product" @if(isset($warehouse)) value="{{ $warehouse->product }}" @endif required>
+					</div>
 					<div class="col-md-6 mb-3">
-						<label class="label-form" for="product_id">Producto</label>
-						<select class="form-control" id="product_id" name="product_id" multiple="multiple" data-validation="required">
-							@foreach(App\Products::where('products.status',1)->orderDescription()->get() as $cat)
-								<option value="{{ $cat->id }}" @if(isset($warehouse) && $warehouse->product_id ==$cat->id) selected="selected" @endif>{{ $cat->code }} - {{ $cat->description }}</option>
+						<select class="form-control" id="provider_id" name="provider_id" multiple="multiple" data-validation="required">
+							@foreach(App\Provider::where('status',1)->get() as $e)
+								<option value="{{ $e->id }}" @if(isset($warehouse) && $warehouse->provider_id == $e->id) selected="selected" @endif>{{ $e->businessName }}</option>
 							@endforeach
 						</select>
 					</div>
 				</div>
 				<div class="form-row">
 					<div class="md-form col-md-6 mb-3">
-						<label class="label-form" for="quantity">Cantidad</label>
-						<input type="text" class="form-control" id="quantity" name="quantity" @if(isset($warehouse)) value="{{ $warehouse->quantity }}" @endif placeholder="Cantidad" required>
+						<i class="fas fa-cubes prefix"></i>
+						<label class="label-form" for="quantity">Cantidad a Ingresar</label>
+						<input type="text" class="form-control" id="quantity" name="quantity" @if(isset($warehouse)) value="{{ $warehouse->quantity }}" @endif required>
 					</div>
 					<div class="md-form col-md-6 mb-3">
+						<i class="fas fa-calendar prefix"></i>
 						<label class="label-form" for="date">Fecha</label>
-						<input type="text" class="form-control" id="date" name="date" @if(isset($warehouse)) value="{{ $warehouse->date }}" @endif placeholder="yyyy-mm-dd" required>
+						<input type="text" class="form-control" id="date" name="date" @if(isset($warehouse)) value="{{ $warehouse->date }}" @endif required>
 					</div>
 				</div>
 				<div class="form-row">
 					<div class="md-form col-md-6 mb-3">
+						<i class="fas fa-cubes prefix"></i>
 						<label class="label-form" for="quantity_ex">Cantidad en existencia</label>
-						<input type="text" class="form-control" id="quantity_ex" name="quantity_ex" @if(isset($warehouse)) value="{{ $warehouse->quantity_ex }}" @else value="0" @endif readonly="readonly" placeholder="Cantidad" required>
-					</div>
-					<div class="md-form col-md-6 mb-3">
-						<label class="label-form" for="price">Precio</label>
-						<input type="text" class="form-control" id="price" name="price" @if(isset($warehouse)) value="{{ $warehouse->price }}" @endif placeholder="0.00" required>
+						<input type="text" class="form-control" id="quantity_ex" name="quantity_ex" @if(isset($warehouse)) value="{{ $warehouse->quantity_ex }}" @endif readonly="readonly" required>
 					</div>
 				</div>
 				<div class="form-row">
 					<div class="md-form col-md-6 mb-3">
-						<label class="label-form" for="wholesale_price">Precio Mayoreo</label>
-						<input type="text" class="form-control" id="wholesale_price" name="wholesale_price" @if(isset($warehouse)) value="{{ $warehouse->wholesale_price }}" @endif placeholder="0.00" required>
+						<i class="fas fa-dollar-sign prefix"></i>
+						<label class="label-form" for="price_purchase">Precio Compra</label>
+						<input type="text" class="form-control" id="price_purchase" name="price_purchase" @if(isset($warehouse)) value="{{ $warehouse->price_purchase }}" @endif required>
+					</div>
+					<div class="md-form col-md-6 mb-3">
+						<i class="fas fa-dollar-sign prefix"></i>
+						<label class="label-form" for="price">Precio Venta</label>
+						<input type="text" class="form-control" id="price" name="price" @if(isset($warehouse)) value="{{ $warehouse->price }}" @endif required>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="md-form col-md-6 mb-3">
+						<i class="fas fa-cubes prefix"></i>
+						<label for="min_wholesale_quantity">Cant. Minima Mayoreo</label>
+						<input type="text" class="form-control" id="min_wholesale_quantity" name="min_wholesale_quantity" @if(isset($warehouse)) value="{{ $warehouse->min_wholesale_quantity }}" @endif required>
+					</div>
+					<div class="md-form col-md-6 mb-3">
+						<i class="fas fa-dollar-sign prefix"></i>
+						<label class="label-form" for="wholesale_price">Precio Venta Mayoreo</label>
+						<input type="text" class="form-control" id="wholesale_price" name="wholesale_price" @if(isset($warehouse)) value="{{ $warehouse->wholesale_price }}" @endif required>
 					</div>
 				</div>
 				<p><br></p>
@@ -90,7 +111,19 @@
 		});
 		$('[name="product_id"]').select2(
 		{
-			placeholder				: 'Seleccione uno',
+			placeholder				: 'Producto',
+			language				: "es",
+			maximumSelectionLength	: 1,
+		});
+		$('[name="unit"]').select2(
+		{
+			placeholder				: 'Unidad',
+			language				: "es",
+			maximumSelectionLength	: 1,
+		});
+		$('[name="provider_id"]').select2(
+		{
+			placeholder				: 'Proveedor',
 			language				: "es",
 			maximumSelectionLength	: 1,
 		});
@@ -123,7 +156,6 @@
 		})
 		.on('change','[name="product_id"]',function()
 		{
-			$('[name="wholesale_price"],[name="price"],[name="quantity_ex"]').val('0');
 			idproduct = $(this).val();
 			if (idproduct != "") 
 			{
@@ -144,8 +176,9 @@
 						swal.close();
 						$.each(data,function(i, d) 
 						{
-							$('[name="wholesale_price"]').val(d.wholesale_price);
-							$('[name="price"]').val(d.price);
+							$('[name="price"]').val(d.price).trigger('change');
+							$('[name="wholesale_price"]').val(d.wholesale_price).trigger('change');
+							$('[name="price_purchase"]').val(d.price_purchase).trigger('change');
 						});
 					}
 				});
@@ -160,10 +193,17 @@
 						swal.close();
 						$.each(data,function(i, d) 
 						{
-							$('[name="quantity_ex"]').val(d.quantity_ex);
+							$('[name="quantity_ex"]').val(d.quantity_ex).trigger('change');
 						});
 					}
 				});
+			}
+			else
+			{
+				$('[name="price"]').val(null).trigger('change');
+				$('[name="wholesale_price"]').val(null).trigger('change');
+				$('[name="price_purchase"]').val(null).trigger('change');
+				$('[name="quantity_ex"]').val(null).trigger('change');
 			}
 		})
 

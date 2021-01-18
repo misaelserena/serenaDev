@@ -254,15 +254,17 @@
 			var options = 
 			{
 			  	series: 
-			  	[{
-					name: "Ventas",
-					data: 
-					[
-						@foreach($salesForMonth as $countSale)
-							{{ $countSale }},
-						@endforeach
-					]
-				}],
+			  	[
+					{
+						name: "Ventas",
+						data: 
+						[
+							@foreach($salesForMonth as $countSale)
+								{{ $countSale }},
+							@endforeach
+						]
+					}
+				],
 			  	chart: 
 			  	{
 				  	height: 350,

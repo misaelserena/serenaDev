@@ -59,15 +59,18 @@ class AdministrationWarehouseController extends Controller
 			}
 		}
 
-		$warehouse					= new App\Warehouse();
-		$warehouse->quantity		= $request->quantity;
-		$warehouse->product_id		= $request->product_id;
-		$warehouse->quantity_ex		= $request->quantity + $request->quantity_ex;
-		$warehouse->price			= $request->price;
-		$warehouse->wholesale_price	= $request->wholesale_price;
-		$warehouse->date			= $request->date;
-		$warehouse->users_id		= Auth::user()->id;
-		$warehouse->status			= 1;
+		$warehouse							= new App\Warehouse();
+		$warehouse->product_id				= $request->product_id;
+		$warehouse->date					= $request->date;
+		$warehouse->quantity				= $request->quantity;
+		$warehouse->price_purchase			= $request->price_purchase;
+		$warehouse->price					= $request->price;
+		$warehouse->provider_id				= $request->provider_id;
+		$warehouse->quantity_ex				= $request->quantity_ex;
+		$warehouse->wholesale_price			= $request->wholesale_price;
+		$warehouse->min_wholesale_quantity	= $request->min_wholesale_quantity;
+		$warehouse->users_id				= Auth::user()->id;
+		$warehouse->status					= 1;
 		$warehouse->save();
 
 		$alert = "swal('','Inventario Registrado Exitosamente','success')";
@@ -79,7 +82,7 @@ class AdministrationWarehouseController extends Controller
 	{
 		if ($request->ajax()) 
 		{
-			$product = App\Products::select('products.price as price','products.wholesale_price as wholesale_price')
+			$product = App\Products::select('products.price as price','products.wholesale_price as wholesale_price','products.price_purchase as price_purchase')
 							->where('status',1)
 							->find($request->idproduct);
 
@@ -169,15 +172,19 @@ class AdministrationWarehouseController extends Controller
 		$old->status	= 0;
 		$old->save();
 
-		$warehouse					= new App\Warehouse();
-		$warehouse->quantity		= $request->quantity;
-		$warehouse->product_id		= $request->product_id;
-		$warehouse->quantity_ex		= $request->quantity_ex;
-		$warehouse->price			= $request->price;
-		$warehouse->wholesale_price	= $request->wholesale_price;
-		$warehouse->date			= $request->date;
-		$warehouse->users_id		= Auth::user()->id;
-		$warehouse->status			= 1;
+		$warehouse							= new App\Warehouse();
+		$warehouse->product_id				= $request->product_id;
+		$warehouse->date					= $request->date;
+		$warehouse->quantity				= $request->quantity;
+		$warehouse->unit					= $request->unit;
+		$warehouse->price_purchase			= $request->price_purchase;
+		$warehouse->price					= $request->price;
+		$warehouse->provider_id				= $request->provider_id;
+		$warehouse->quantity_ex				= $request->quantity_ex;
+		$warehouse->wholesale_price			= $request->wholesale_price;
+		$warehouse->min_wholesale_quantity	= $request->min_wholesale_quantity;
+		$warehouse->users_id				= Auth::user()->id;
+		$warehouse->status					= 1;
 		$warehouse->save();
 
 		$alert = "swal('','Inventario Actualizado Exitosamente','success')";

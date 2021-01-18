@@ -141,7 +141,7 @@
 <body>
 	<nav class="navbar navbar-dark sticky-top bg-green flex-md-nowrap p-0 shadow">
 	  	<a class="col-md-3 col-lg-2 mr-0 px-3" href="#" style="padding: 5px;padding-right: 5px;padding-left: 5px;text-align: center;">
-	  		<img style="width: 67px;height: auto;max-width: 90%;" src="{{ asset('images/logo-serena.png') }}">
+	  		<img style="width: 67px;height: auto;max-width: 90%;" src="{{ asset('images/logo_cafe_plato.png') }}">
 	  	</a>
 	  	<a class="btn position-absolute" style="color: white; right: 70px;" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
 			<svg class="bi" width="20" height="20" fill="currentColor"><use xlink:href="{{ asset("images/bootstrap-icons.svg#door-closed-fill") }}"/></svg> Salir
