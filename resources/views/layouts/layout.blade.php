@@ -23,7 +23,7 @@
 	<style type="text/css">
 		.nav-dark
 		{
-			background	: #31424a;
+			background	: #202528;
 			color		: white;
 		}
 		.feather 
@@ -40,7 +40,7 @@
 			bottom		: 0;
 			left		: 0;
 			z-index		: 100; /* Behind the navbar */
-			padding		: 70px 0 0; /* Height of navbar */
+			padding		: 0px 0 0; /* Height of navbar */
 			box-shadow	: inset -1px 0 0 rgba(0, 0, 0, .1);
 		}
 
@@ -139,13 +139,10 @@
 	@yield('css')
 </head>
 <body>
-	<nav class="navbar navbar-dark sticky-top bg-green flex-md-nowrap p-0 shadow">
+	<nav class="navbar navbar-dark sticky bg-green flex-md-nowrap p-0 shadow">
 	  	<a class="col-md-3 col-lg-2 mr-0 px-3" href="#" style="padding: 5px;padding-right: 5px;padding-left: 5px;text-align: center;">
-	  		<img style="width: 67px;height: auto;max-width: 90%;" src="{{ asset('images/logo_cafe_plato.png') }}">
+	  		<img style="width: 67px;height: auto;max-width: 90%;" src="{{ asset('images/logo_cafe_bn_circle.png') }}">
 	  	</a>
-	  	<a class="btn position-absolute" style="color: white; right: 70px;" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-			<svg class="bi" width="20" height="20" fill="currentColor"><use xlink:href="{{ asset("images/bootstrap-icons.svg#door-closed-fill") }}"/></svg> Salir
-		</a>
 		<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
 			@csrf
 		</form>
@@ -157,28 +154,33 @@
 		<nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block nav-dark sidebar collapse">
 	  		<div class="sidebar-sticky pt-3">
 				<ul class="nav flex-column">
-		  			<li class="nav-item">
-						<a class="nav-link @unless(isset($id)) active-nav @endunless" href="{{ url("/home") }}">
+					<li class="nav-item" style="width: 85%; margin: 0 auto; margin-top: 0; text-align: center;">
+						<a class="col-md-3 col-lg-2 mr-0 px-3" href="#" style="padding: 5px;padding-right: 5px;padding-left: 5px;text-align: center;">
+					  		<img style="width: 67px;height: auto;max-width: 90%;" src="{{ asset('images/logo_cafe_bn_circle.png') }}">
+					  	</a>
+					</li>
+		  			<li class="nav-item" style="width: 85%; margin: 0 auto; margin-top: 5px;">
+						<a class="nav-link @unless(isset($id)) active-nav @endunless" href="{{ url("/home") }}" style="border-radius: 10px;">
 			  				<svg class="bi" width="20" height="20" fill="currentColor"><use xlink:href="{{ asset("images/bootstrap-icons.svg#house-fill") }}"/></svg> Inicio
 						</a>
 		  			</li>
 		  			@foreach(Auth::user()->module->where('father',null)->sortBy('name') as $module)
-			  			<li class="nav-item">
-							<a class="nav-link @if(isset($id) && $id == $module->id) active-nav @endif" href="{{ url("$module->url") }}">
+			  			<li class="nav-item" style="width: 85%; margin: 0 auto; margin-top: 5px;">
+							<a class="nav-link @if(isset($id) && $id == $module->id) active-nav @endif" href="{{ url("$module->url") }}" style="border-radius: 10px;">
 				  				<svg class="bi" width="20" height="20" fill="currentColor"><use xlink:href="{{ asset("images/bootstrap-icons.svg#".$module->icon) }}"></use></svg> {{ $module->name }}
 							</a>
 			  			</li>
 			  		@endforeach
-			  		<li class="nav-item">
-						<a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+			  		<li class="nav-item" style="width: 85%; margin: 0 auto; margin-top: 5px;">
+						<a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" style="border-radius: 10px;">
 							<svg class="bi" width="20" height="20" fill="currentColor"><use xlink:href="{{ asset("images/bootstrap-icons.svg#door-closed-fill") }}"/></svg> Cerrar sesión
 						</a>
 						<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
 							@csrf
 						</form>
 				  	</li>
-				  	<li class="nav-item">
-						<a class="nav-link" href="{{ url('/') }}">
+				  	<li class="nav-item" style="width: 85%; margin: 0 auto; margin-top: 5px;">
+						<a class="nav-link" href="{{ url('/') }}" style="border-radius: 10px;">
 							<svg class="bi" width="20" height="20" fill="currentColor"><use xlink:href="{{ asset("images/bootstrap-icons.svg#arrow-left-circle-fill") }}"/></svg> Regresar a la pagina
 						</a>
 				  	</li>

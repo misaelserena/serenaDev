@@ -10,9 +10,10 @@ use App;
 use Alert;
 use Auth;
 use Excel;
+use Carbon\Carbon;
 
 
-class AdministrationWarehouseController extends Controller
+class AdministrationInputsController extends Controller
 {
     private $module_father	= 22;
 	private $module_create	= 23;
@@ -34,7 +35,7 @@ class AdministrationWarehouseController extends Controller
     public function create()
     {
     	$data = App\Module::find($this->module_father);
-		return view('administration.warehouse.create',
+		return view('administration.inputs.create',
 			[
 				'id'		=>	$data['father'],
 				'title'		=>	$data['name'],
@@ -46,45 +47,43 @@ class AdministrationWarehouseController extends Controller
 
 	public function store(Request $request)
 	{
-		$updateWarehouse = App\Warehouse::where('product_id',$request->product_id)->get();
+		$updateInputs = App\Inputs::where('description',$request->description)->get();
 
-		if ($updateWarehouse != "") 
+		if ($updateInputs != "") 
 		{
-			foreach ($updateWarehouse as $update)
+			foreach ($updateInputs as $update)
 			{
-				$w				= App\Warehouse::find($update->id);
-				$w->users_id 	= Auth::user()->id;
+				$w				= App\Inputs::find($update->id);
+				$w->users_id	= Auth::user()->id;
 				$w->status		= 0;
 				$w->save();
 			}
 		}
 
-		$warehouse							= new App\Warehouse();
-		$warehouse->product_id				= $request->product_id;
-		$warehouse->date					= $request->date;
-		$warehouse->quantity				= $request->quantity;
-		$warehouse->price_purchase			= $request->price_purchase;
-		$warehouse->price					= $request->price;
-		$warehouse->provider_id				= $request->provider_id;
-		$warehouse->quantity_ex				= $request->quantity_ex;
-		$warehouse->wholesale_price			= $request->wholesale_price;
-		$warehouse->min_wholesale_quantity	= $request->min_wholesale_quantity;
-		$warehouse->users_id				= Auth::user()->id;
-		$warehouse->status					= 1;
-		$warehouse->save();
+		$inputs					= new App\Inputs();
+		$inputs->description	= $request->description;
+		$inputs->date			= $request->date;
+		$inputs->quantity		= $request->quantity;
+		$inputs->price_purchase	= $request->price_purchase;
+		$inputs->total			= $request->total;
+		$inputs->provider_id	= $request->provider_id;
+		$inputs->users_id		= Auth::user()->id;
+		$inputs->status			= 1;
+		$inputs->unit 			= $request->unit;
+		$inputs->save();
 
 		$alert = "swal('','Inventario Registrado Exitosamente','success')";
 
-		return redirect()->route('administration.warehouse.show',$warehouse->id)->with('alert',$alert);
+		return redirect()->route('administration.inputs.show',$inputs->id)->with('alert',$alert);
 	}
 
 	public function getProduct(Request $request)
 	{
 		if ($request->ajax()) 
 		{
-			$product = App\Products::select('products.price as price','products.wholesale_price as wholesale_price','products.price_purchase as price_purchase')
-							->where('status',1)
-							->find($request->idproduct);
+			$product 	= App\Products::select('products.price as price','products.wholesale_price as wholesale_price','products.price_purchase as price_purchase')
+						->where('status',1)
+						->find($request->idproduct);
 
 			if (count($product)>0) 
 			{
@@ -93,49 +92,50 @@ class AdministrationWarehouseController extends Controller
 		}
 	}
 
-	public function getWarehouse(Request $request)
+	public function getInputs(Request $request)
 	{
 		if ($request->ajax()) 
 		{
-			$warehouse = App\Warehouse::select('warehouse.quantity_ex as quantity_ex','warehouse.id as id')
-							->where('status',1)
-							->where('product_id',$request->idproduct)
-							->get();
+			$inputs = App\Inputs::select('inputs.quantity_ex as quantity_ex','inputs.id as id')
+					->where('status',1)
+					->where('product_id',$request->idproduct)
+					->get();
 
-			if ($warehouse != "") 
+			if ($inputs != "") 
 			{
-				return Response($warehouse);
+				return Response($inputs);
 			}
 		}
 	}
 
 	public function edit(Request $request)
 	{
-		$data		= App\Module::find($this->module_father);
-		$product_id	= $request->product_id;
-		$date		= $request->date;
-		$warehouse 	= App\Warehouse::where('status',1)
-					->where(function($query) use ($product_id,$date)
-					{
-						if ($product_id != "") 
+		$data			= App\Module::find($this->module_father);
+		$description	= $request->description;
+		$date			= $request->date;
+		$inputs			= App\Inputs::where('status',1)
+						->where(function($query) use ($description,$date)
 						{
-							$query->whereIn('product_id',$product_id);
-						}
-						if ($date != "") 
-						{
-							$query->where('date',$date);
-						}
-					})
-					->paginate(10);
-		return view('administration.warehouse.search',
+							if ($description != "") 
+							{
+								$query->whereIn('description',$description);
+							}
+							if ($date != "") 
+							{
+								$query->where('date',$date);
+							}
+						})
+						->orderBy('id','desc')
+						->paginate(10);
+		return view('administration.inputs.search',
 			[
 				'id'		=> $data['father'],
 				'title'		=> $data['name'],
 				'details'	=> $data['details'],
 				'child_id'	=> $this->module_father,
 				'option_id'	=> $this->module_edit,
-				'warehouse'	=> $warehouse,
-				'product_id' => $product_id,
+				'inputs'	=> $inputs,
+				'description' => $description,
 				'date'	=> $date
 			]);
 	}
@@ -143,17 +143,17 @@ class AdministrationWarehouseController extends Controller
 	public function show($id)
 	{
 		$data					= App\Module::find($this->module_father);
-		$warehouse				= App\Warehouse::find($id);
-		if($warehouse != "")
+		$inputs				= App\Inputs::find($id);
+		if($inputs != "")
 		{
-			return view('administration.warehouse.create',
+			return view('administration.inputs.create',
 				[
 					'id'		=> $data['father'],
 					'title'		=> $data['name'],
 					'details'	=> $data['details'],
 					'child_id'	=> $this->module_father,
 					'option_id'	=> $this->module_edit,
-					'warehouse'	=> $warehouse,
+					'inputs'	=> $inputs,
 				]);
 		}
 		else
@@ -164,44 +164,41 @@ class AdministrationWarehouseController extends Controller
 
 	public function update(Request $request,$id)
 	{
-		$updateWarehouse = App\Warehouse::where('product_id',$request->product_id)->get();
+		$updateInputs = App\Inputs::where('description',$request->description)->get();
 
-		$old			= App\Warehouse::find($id);
+		$old			= App\Inputs::find($id);
 		$old->date		= $request->date;
 		$old->users_id	= Auth::user()->id;
 		$old->status	= 0;
 		$old->save();
 
-		$warehouse							= new App\Warehouse();
-		$warehouse->product_id				= $request->product_id;
-		$warehouse->date					= $request->date;
-		$warehouse->quantity				= $request->quantity;
-		$warehouse->unit					= $request->unit;
-		$warehouse->price_purchase			= $request->price_purchase;
-		$warehouse->price					= $request->price;
-		$warehouse->provider_id				= $request->provider_id;
-		$warehouse->quantity_ex				= $request->quantity_ex;
-		$warehouse->wholesale_price			= $request->wholesale_price;
-		$warehouse->min_wholesale_quantity	= $request->min_wholesale_quantity;
-		$warehouse->users_id				= Auth::user()->id;
-		$warehouse->status					= 1;
-		$warehouse->save();
+		$inputs					= new App\Inputs();
+		$inputs->description	= $request->description;
+		$inputs->date			= $request->date;
+		$inputs->quantity		= $request->quantity;
+		$inputs->price_purchase	= $request->price_purchase;
+		$inputs->total			= $request->total;
+		$inputs->provider_id	= $request->provider_id;
+		$inputs->users_id		= Auth::user()->id;
+		$inputs->status			= 1;
+		$inputs->unit 			= $request->unit;
+		$inputs->save();
 
 		$alert = "swal('','Inventario Actualizado Exitosamente','success')";
 
-		return redirect()->route('administration.warehouse.show',$warehouse->id)->with('alert',$alert);
+		return redirect()->route('administration.inputs.show',$inputs->id)->with('alert',$alert);
 	}
 
 	public function export(Request $request)
 	{
-		$product_id	= $request->product_id;
+		$description	= $request->description;
 		$date		= $request->date;
-		$warehouse 	= App\Warehouse::where('status',1)
-					->where(function($query) use ($product_id,$date)
+		$inputs 	= App\Inputs::where('status',1)
+					->where(function($query) use ($description,$date)
 					{
-						if ($product_id != "") 
+						if ($description != "") 
 						{
-							$query->whereIn('product_id',$product_id);
+							$query->whereIn('description',$description);
 						}
 						if ($date != "") 
 						{
@@ -210,9 +207,9 @@ class AdministrationWarehouseController extends Controller
 					})
 					->get();
 
-		Excel::create('Inventario', function($excel) use ($product_id,$date,$warehouse)
+		Excel::create('Inventario', function($excel) use ($description,$date,$inputs)
 		{
-			$excel->sheet('Lista',function($sheet) use ($product_id,$date,$warehouse)
+			$excel->sheet('Lista',function($sheet) use ($description,$date,$inputs)
 			{
 				$sheet->setStyle([
 						'font' => [
@@ -249,7 +246,7 @@ class AdministrationWarehouseController extends Controller
 				$sheet->row(2,['ID','Producto','Cantidad en existencia','Precio Normal','Precio Mayoreo','Cant. Mínima para mayoreo','Fecha']);
 
 				$countRow = 3;
-				foreach ($warehouse as $w)
+				foreach ($inputs as $w)
 				{
 					$tempCount	= 0;
 					$row	= [];
@@ -273,6 +270,14 @@ class AdministrationWarehouseController extends Controller
 
 	public function delete($id)
 	{
+		$old			= App\Inputs::find($id);
+		$old->date		= Carbon::now();
+		$old->users_id	= Auth::user()->id;
+		$old->status	= 0;
+		$old->save();
 
+		$alert = "swal('','Inventario Actualizado Exitosamente','success')";
+
+		return redirect()->route('administration.inputs.edit')->with('alert',$alert);
 	}
 }

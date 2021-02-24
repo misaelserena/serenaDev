@@ -16,7 +16,8 @@ class SalesDetail extends Model
     	'subtotal',
     	'iva',
     	'total',
-    	'sales_id'
+    	'sales_id',
+        'quantity'
     ];
 
     public function productData()

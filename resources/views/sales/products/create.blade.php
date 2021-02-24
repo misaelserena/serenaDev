@@ -146,8 +146,8 @@
 					<div class="col-md-3 mb-3">
 						<label class="label-form" for="product_id">Producto</label>
 						<select class="form-control product_id" id="product_id" multiple="multiple" data-validation="required">
-							@foreach(App\Products::where('products.status',1)->orderDescription()->get() as $cat)
-								<option value="{{ $cat->id }}">{{ $cat->code }} - {{ $cat->description }}</option>
+							@foreach(App\Products::where('products.status',1)->orderDescription()->get() as $product)
+								<option value="{{ $product->id }}">{{ $product->nameProduct() }}</option>
 							@endforeach
 						</select>
 					</div>
@@ -169,7 +169,6 @@
 					<div class="col-md-2 mb-3">
 						<label class="label-form" for="quantity">Cantidad</label>
 						<input type="text" class="form-control quantity" id="quantity" placeholder="0">
-						<input type="hidden" class="form-control quantity_ex" id="quantity_ex" placeholder="0">
 					</div>
 					<div class="col-md-2 mb-3">
 						<label class="label-form" for="subtotal">Subtotal</label>
@@ -244,6 +243,19 @@
 			  	</div>
 			</div>
 		</div>
+		<br>
+		<div class="card">
+			<div class="card-header text-white bg-green">
+				ENTREGADO/PENDIENTE
+			</div>
+			<div class="card-body">
+				<select name="shipping_status" multiple="multiple">
+					<option value="1">Entregado</option>
+					<option value="0">Pendiente</option>
+				</select>
+			</div>
+		</div>
+		<br>
 		<p><br></p>
 		<center>
 			<button type="submit" name="sendForm" class="btn btn-success">@if(isset($sale)) GUARDAR CAMBIOS @else REGISTRAR @endif</button>
@@ -262,14 +274,14 @@
 	});
 	$(document).ready(function()
 	{
-		$('[name="client_id"],#product_id,#type_price,[name="state_idstate"],#iva').select2(
+		$('[name="client_id"],#product_id,#type_price,[name="state_idstate"],#iva,[name="shipping_status"]').select2(
 		{
 			placeholder				: 'Seleccione uno',
 			language				: "es",
 			maximumSelectionLength	: 1,
 			width 					: "100%"
 		});
-		$('#price,#total,#discount,#quantity,#quantity_ex').numeric({ altDecimal: ".", decimalPlaces: 2, negative:true });
+		$('#price,#total,#discount,#quantity').numeric({ altDecimal: ".", decimalPlaces: 2, negative:true });
 
 		$(document).on('click','.btn-delete-form',function(e)
 		{
@@ -362,7 +374,7 @@
 				$.ajax(
 				{
 					type 	: 'get',
-					url 	: '{{ url("administration/warehouse/get-product") }}',
+					url 	: '{{ url("administration/inputs/get-product") }}',
 					data 	: {'idproduct':idproduct},
 					success : function(data)
 					{
@@ -374,27 +386,11 @@
 						});
 					}
 				});
-
-				$.ajax(
-				{
-					type 	: 'get',
-					url 	: '{{ url("administration/warehouse/get-warehouse") }}',
-					data 	: {'idproduct':idproduct},
-					success : function(data)
-					{
-						swal.close();
-						$.each(data,function(i, d) 
-						{
-							$('.quantity_ex').val(d.quantity_ex);
-						});
-					}
-				});
 			}
 		})
 		.on('click','#addProduct',function()
 		{
 			quantity		= $(this).parents('div.card-body').find('.quantity').val();
-			quantity_ex		= $(this).parents('div.card-body').find('.quantity_ex').val();
 			if (type_price == 1) 
 			{
 				price = $(this).parents('div.card-body').find('.price').val();
@@ -412,11 +408,7 @@
 
 			if (quantity != "" && price != "" && total != "" && product_id != "") 
 			{
-				if (quantity_ex < quantity) 
-				{
-					swal('Error','La cantidad existente en inventario es menor a lo que esta comprando','error');
-				}
-				else if (total <= 0) 
+				if (total <= 0) 
 				{
 					$('#discount').val(0);
 					$('#quantity').val(0);
@@ -453,7 +445,7 @@
 
 					$('#productSelected').append(tr);
 
-					$('.quantity,.quantity_ex,.price,.discount,.total,.subtotal,.ivaCalc').val(null);
+					$('.quantity,.price,.discount,.total,.subtotal,.ivaCalc').val(null);
 					$('.product_id,.iva').val(null).trigger('change');
 
 					product_id = [];

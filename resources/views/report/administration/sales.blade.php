@@ -37,7 +37,7 @@
 						<label class="label-form" for="product_id">Producto</label>
 						<select class="form-control" id="product_id" name="product_id[]" multiple="multiple">
 							@foreach(App\Products::where('products.status',1)->orderDescription()->get() as $cat)
-								<option value="{{ $cat->id }}" @if(isset($product_id) && in_array($cat->id, $product_id)) selected="selected" @endif>{{ $cat->code }} - {{ $cat->description }}</option>
+								<option value="{{ $cat->id }}" @if(isset($product_id) && in_array($cat->id, $product_id)) selected="selected" @endif>{{ $cat->nameProduct() }}</option>
 							@endforeach
 						</select>
 					</div>
@@ -110,6 +110,7 @@
 		<div class="content-chart">
 			<div class="chart chart_sales_year"></div>
 			<div class="chart chart_sales_product"></div>
+			<div class="chart chart_total_month"></div>
 		</div>
 	@else
 		<div class="alert alert-danger" role="alert">Resultado no encontrado</div>
@@ -127,8 +128,9 @@
 		});
 		$(document).ready(function()
 		{
-			chartTotalSales();
+			salesForMonth();
 			chartTotalProductSold();
+			chartTotalSold();
 			$(function() 
 			{
 				$("#mindate,#maxdate").datepicker({ dateFormat: "yy-mm-dd" });
@@ -249,7 +251,7 @@
 			chart.render();
 		}
 
-		function chartTotalSales()
+		function salesForMonth()
 		{
 			var options = 
 			{
@@ -259,7 +261,7 @@
 						name: "Ventas",
 						data: 
 						[
-							@foreach($salesForMonth as $countSale)
+							@foreach($salesForMonth['month'] as $countSale)
 								{{ $countSale }},
 							@endforeach
 						]
@@ -306,6 +308,66 @@
 			};
 
 			var chart = new ApexCharts(document.querySelector(".chart_sales_year"), options);
+			chart.render();
+		}
+
+		function chartTotalSold()
+		{
+			var options = 
+			{
+			  	series: 
+			  	[
+					{
+						name: "Total",
+						data: 
+						[
+							@foreach($salesForMonth['totalSold'] as $countSale)
+								{{ $countSale }},
+							@endforeach
+						]
+					}
+				],
+			  	chart: 
+			  	{
+				  	height: 350,
+				  	type: 'line',
+				  	zoom: 
+				  	{
+						enabled: false
+				 	}
+				},
+				dataLabels: 
+				{
+			  		enabled: false
+				},
+				stroke: 
+				{
+			  		curve: 'straight'
+				},
+				markers: 
+				{
+					size: 4,
+				},
+				title: 
+				{
+			  		text: 'Total Vendido Por Mes',
+			  		align: 'left'
+				},
+				grid: 
+				{
+				  	row: 
+				  	{
+						colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+						opacity: 0.5
+				  	},
+				},
+				xaxis: 
+				{
+			  		categories: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep','Oct','Nov','Dic'],
+				}
+			};
+
+			var chart = new ApexCharts(document.querySelector(".chart_total_month"), options);
 			chart.render();
 		}
 	</script>

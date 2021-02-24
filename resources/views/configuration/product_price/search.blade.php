@@ -1,25 +1,28 @@
 @extends('layouts.child_module')
   
 @section('data')
-	<center>
-		{!! Form::open(['route' => 'configuration.product.edit', 'method' => 'GET']) !!}			
-			<div class="container">
+		{!! Form::open(['route' => 'configuration.product.edit', 'method' => 'GET']) !!}	
+		<div class="card">
+			<div class="card-header">
+				BÚSQUEDA
+			</div>
+			<div class="card-body">		
 				<div class="form-group">
-					<div class="col-md-6 mb-3 text-align-left">
+					<div class="md-form">
 						<label for="description">Descripción</label>
-						<input type="text" class="form-control" id="description" name="description" placeholder="Descripción" value="{{ isset($description) ? $description : '' }}">
+						<input type="text" class="form-control" id="description" name="description" value="{{ isset($description) ? $description : '' }}">
 					</div>
-					<div class="col-md-6 mb-3 text-align-left">
+					<div class="md-form">
 						<label for="code">Código</label>
-						<input type="text" class="form-control" id="code" name="code" placeholder="Código" value="{{ isset($code) ? $code : '' }}">
+						<input type="text" class="form-control" id="code" name="code" value="{{ isset($code) ? $code : '' }}">
 					</div>
 				</div>
+				<button class="btn btn-success" type="submit">
+					<svg class="bi" width="20" height="20" fill="currentColor"><use xlink:href="{{ asset("images/bootstrap-icons.svg#search") }}"></use></svg> Buscar
+				</button>
 			</div>
-			<button class="btn btn-success" type="submit">
-				<svg class="bi" width="20" height="20" fill="currentColor"><use xlink:href="{{ asset("images/bootstrap-icons.svg#search") }}"></use></svg> Buscar
-			</button>
+		</div>
 		{!! Form::close() !!}
-	</center>
 	<br>
 	@if(count($products) > 0)
 		<div class="table-responsive">
@@ -37,7 +40,7 @@
 						<tr>
 							<td>{{ $product->id }}</td>
 							<td>{{ $product->code }}</td>
-							<td>{{ $product->description }} {{ $product->net_content }} {{ App\CatMeasurementTypes::where('description',$product->unit)->first()->abbreviation }}</td>
+							<td>{{ $product->nameProduct() }}</td>
 							<td>
 								@if($product->status == 1)
 									<a href="{{ route('configuration.product.show',$product->id) }}" class='btn btn-info' alt='Editar' title='Editar'>

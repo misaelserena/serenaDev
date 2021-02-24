@@ -20,21 +20,21 @@
 @section('data')
 	@php
 		$listMonths = [
-			1 => 'Enero',
-			2 => 'Febrero',
-			3 => 'Marzo',
-			4 => 'Abril',
-			5 => 'Mayo',
-			6 => 'Junio',
-			7 => 'Julio',
-			8 => 'Agosto',
-			9 => 'Septiembre',
-			10 => 'Octubre',
-			11 => 'Noviembre',
-			12 => 'Diciembre'
+			1	=> 'Enero',
+			2	=> 'Febrero',
+			3	=> 'Marzo',
+			4	=> 'Abril',
+			5	=> 'Mayo',
+			6	=> 'Junio',
+			7	=> 'Julio',
+			8	=> 'Agosto',
+			9	=> 'Septiembre',
+			10	=> 'Octubre',
+			11	=> 'Noviembre',
+			12	=> 'Diciembre'
  		]
 	@endphp
-	{!! Form::open(['route' => 'reports.administration.sales', 'method' => 'GET']) !!}	
+	{!! Form::open(['route' => 'reports.administration.inputs-outputs', 'method' => 'GET']) !!}	
 		<div class="card">
 			<div class="card-header">
 				BÚSQUEDA DE VENTAS
@@ -65,6 +65,10 @@
 			</div>
 		</div>
 	{!! Form::close() !!}
+	<p><br></p>
+	<div class="input_output">
+		
+	</div>
 @endsection
 @section('scripts')
 	<script type="text/javascript">
@@ -77,6 +81,7 @@
 		});
 		$(document).ready(function()
 		{
+			inputsOutputs();
 			$(function() 
 			{
 				$("#mindate,#maxdate").datepicker({ dateFormat: "yy-mm-dd" });
@@ -94,6 +99,84 @@
 				width 					: "100%"
 			});
 		});
+
+		function inputsOutputs()
+		{
+			var options = 
+			{
+			  	series: 
+			  	[
+					{
+						name: "Salidas",
+						data: 
+						[
+							@foreach($dataIntOut['outputs'] as $output)
+								{{ $output }},
+							@endforeach
+						]
+					},
+					{
+						name: "Entradas",
+						data: 
+						[
+							@foreach($dataIntOut['inputs'] as $input)
+								{{ $input }},
+							@endforeach
+						]
+					},
+					{
+						name: "Utilidad",
+						data: 
+						[
+							@foreach($dataIntOut['utility'] as $utility)
+								{{ $utility }},
+							@endforeach
+						]
+					}
+				],
+			  	chart: 
+			  	{
+				  	height: 350,
+				  	type: 'line',
+				  	zoom: 
+				  	{
+						enabled: false
+				 	}
+				},
+				dataLabels: 
+				{
+			  		enabled: false
+				},
+				stroke: 
+				{
+			  		curve: 'straight'
+				},
+				markers: 
+				{
+					size: 4,
+				},
+				title: 
+				{
+			  		text: 'Entradas vs Salidas',
+			  		align: 'left'
+				},
+				grid: 
+				{
+				  	row: 
+				  	{
+						colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+						opacity: 0.5
+				  	},
+				},
+				xaxis: 
+				{
+			  		categories: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep','Oct','Nov','Dic'],
+				}
+			};
+
+			var chart = new ApexCharts(document.querySelector(".input_output"), options);
+			chart.render();
+		}
 
 		
 	</script>

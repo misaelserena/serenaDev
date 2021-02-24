@@ -6,12 +6,8 @@
 		<div class="title-config">
 			<h1>{{ $title }}</h1>
 		</div>
-		<center>
-			<i style="color: #B1B1B1">{{ $details }}</i>
-		</center>
-		<br>
+		<i style="color: #B1B1B1">{{ $details }}</i>
 		<hr>
-		<br>
 		@if(Auth::user()->module->where('father',$id)->where('category','!=',NULL)->count()>0)
 			@php
 				$categoryModule	= '';

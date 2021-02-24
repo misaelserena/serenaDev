@@ -4,9 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Warehouse extends Model
+class Inputs extends Model
 {
-    protected $table = 'warehouse';
+    protected $table = 'inputs';
 
     protected $whareHouseTypes = [
         1 => 'Papelería',
@@ -21,7 +21,9 @@ class Warehouse extends Model
         'wholesale_price',
         'date',
         'users_id',
-        'status'
+        'status',
+        'description',
+        'unit'
     ];
 
     public $timestamps = false;

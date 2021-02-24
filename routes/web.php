@@ -112,16 +112,16 @@ Route::group(['middleware' => ['permission:19']], function ()
 */
 Route::group(['middleware' => ['permission:22']], function () 
 {
-	Route::get('/administration/warehouse', 'AdministrationWarehouseController@index')->name('administration.warehouse.index'); 
-	Route::get('/administration/warehouse/create', 'AdministrationWarehouseController@create')->name('administration.warehouse.create'); 
-	Route::post('/administration/warehouse/store', 'AdministrationWarehouseController@store')->name('administration.warehouse.store'); 
-	Route::get('/administration/warehouse/edit', 'AdministrationWarehouseController@edit')->name('administration.warehouse.edit'); 
-	Route::get('/administration/warehouse/edit/{id}', 'AdministrationWarehouseController@show')->name('administration.warehouse.show'); 
-	Route::put('/administration/warehouse/edit/{id}/update', 'AdministrationWarehouseController@update')->name('administration.warehouse.update'); 
-	Route::get('/administration/warehouse/{id}/delete','AdministrationWarehouseController@delete')->name('administration.warehouse.delete');
-	Route::get('/administration/warehouse/get-product', 'AdministrationWarehouseController@getProduct'); 
-	Route::get('/administration/warehouse/get-warehouse', 'AdministrationWarehouseController@getWarehouse'); 
-	Route::get('/administration/warehouse/export', 'AdministrationWarehouseController@export')->name('administration.warehouse.export'); 
+	Route::get('/administration/inputs', 'AdministrationInputsController@index')->name('administration.inputs.index'); 
+	Route::get('/administration/inputs/create', 'AdministrationInputsController@create')->name('administration.inputs.create'); 
+	Route::post('/administration/inputs/store', 'AdministrationInputsController@store')->name('administration.inputs.store'); 
+	Route::get('/administration/inputs/edit', 'AdministrationInputsController@edit')->name('administration.inputs.edit'); 
+	Route::get('/administration/inputs/edit/{id}', 'AdministrationInputsController@show')->name('administration.inputs.show'); 
+	Route::put('/administration/inputs/edit/{id}/update', 'AdministrationInputsController@update')->name('administration.inputs.update'); 
+	Route::get('/administration/inputs/{id}/delete','AdministrationInputsController@delete')->name('administration.inputs.delete');
+	Route::get('/administration/inputs/get-product', 'AdministrationInputsController@getProduct'); 
+	Route::get('/administration/inputs/get-inputs', 'AdministrationInputsController@getWarehouse'); 
+	Route::get('/administration/inputs/export', 'AdministrationInputsController@export')->name('administration.inputs.export'); 
 });
 
 /*
@@ -153,6 +153,7 @@ Route::group(['middleware' => ['permission:16']], function ()
 	Route::get('/sales/product/edit', 'SalesProductController@edit')->name('sales.product.edit'); 
 	Route::get('/sales/product/edit/{id}', 'SalesProductController@show')->name('sales.product.show'); 
 	Route::put('/sales/product/edit/{id}/update', 'SalesProductController@update')->name('sales.product.update'); 
+	Route::put('/sales/product/edit/{sale}/update-status', 'SalesProductController@updateStatus')->name('sales.product.update-status'); 
 	Route::get('/sales/product/{id}/delete','SalesProductController@delete')->name('sales.product.delete');
 	Route::get('/sales/product/get-client', 'SalesProductController@getClients')->name('sales.product.get-clients'); 
 	Route::post('/sales/product/store-client', 'SalesProductController@storeClient')->name('sales.product.store-client');

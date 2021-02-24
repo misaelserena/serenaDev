@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\CatMeasurementTypes;
 
 class Products extends Model
 {
@@ -33,8 +34,13 @@ class Products extends Model
 		return $query->orderBy('description','asc');
 	}
 
-	public function totalSold()
+	public function quantitySold()
 	{
 		return $this->hasMany('App\SalesDetail','products_id','id')->sum('quantity');
+	}
+
+	public function nameProduct()
+	{
+		return $this->description.' '.$this->net_content.' '.CatMeasurementTypes::where('description',$this->unit)->first()->abbreviation;
 	}
 }

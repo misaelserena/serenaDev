@@ -62568,11 +62568,11 @@ $('.js-scroll-trigger').click(function () {
 
 $('body').scrollspy({
   target: '#mainNav',
-  offset: 75
+  offset: 300
 }); // Collapse Navbar
 
 var navbarCollapse = function navbarCollapse() {
-  if ($("#mainNav").offset().top > 100) {
+  if ($("#mainNav").offset().top > 300) {
     $("#mainNav").addClass("navbar-scrolled");
   } else {
     $("#mainNav").removeClass("navbar-scrolled");

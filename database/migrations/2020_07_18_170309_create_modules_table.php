@@ -23,6 +23,7 @@ class CreateModulesTable extends Migration
 			$table->string('url',500)->nullable(true);
 			$table->integer('permissionRequire')->default('1');
 			$table->integer('order')->nullable(true);
+			$table->string('icon',100)->nullable(true);
 			$table->timestamps();
 		});
 	}

@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\URL;
 use App\Sales;
 use App\Module;
 use App\Products;
+use App\CatMeasurementTypes;
+use App\Inputs;
 use Alert;
 use Auth;
 
@@ -69,14 +71,15 @@ class ReportAdministrationController extends Controller
 		$salesForMonth = [];
 		for ($i=1; $i < 13; $i++) 
 		{ 
-			$salesForMonth[$i] = Sales::whereMonth('created_at',$i)->count();
+			$salesForMonth['month'][$i] = Sales::whereMonth('created_at',$i)->count();
+			$salesForMonth['totalSold'][$i] = Sales::whereMonth('created_at',$i)->sum('total');
 		}
 
 		$productSold = [];
 		foreach (Products::all() as $key => $product) 
 		{
-			$productSold['name'][$key] 	= $product->description;
-			$productSold['total'][$key] = $product->totalSold();
+			$productSold['name'][$key] 	= strtolower($product->nameProduct());
+			$productSold['total'][$key] = $product->quantitySold();
 		}
 
 		return view('report.administration.sales',
@@ -98,14 +101,23 @@ class ReportAdministrationController extends Controller
 
 	public function inputsOutputs(Request $request)
 	{
-		$data 	= Module::find(31);
+		$data 		= Module::find(31);
+		$dataIntOut = [];
+		for ($i=1; $i < 13; $i++) 
+		{ 
+			$dataIntOut['outputs'][$i]	= Sales::whereMonth('created_at',$i)->sum('total');
+			$dataIntOut['inputs'][$i] 	= Inputs::whereMonth('date',$i)->where('status',1)->sum('total');
+			$dataIntOut['utility'][$i] 	= $dataIntOut['outputs'][$i]-$dataIntOut['inputs'][$i];
+		}
+
 		return view('report.administration.inputs_outputs',
 			[
 				'id'			=> $data['father'],
 				'title'			=> $data['name'],
 				'details'		=> $data['details'],
 				'child_id'		=> 28,
-				'option_id'		=> 31
+				'option_id'		=> 31,
+				'dataIntOut' 	=> $dataIntOut
 			]);
 	}
 

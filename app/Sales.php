@@ -14,6 +14,7 @@ class Sales extends Model
     	'subtotal',
     	'iva',
     	'total',
+        'shipping_status',
     	'users_id'
     ];
 
@@ -27,4 +28,13 @@ class Sales extends Model
     	return $this->hasOne('App\Client','id','client_id');
     }
 
+    public function coffeeOneKg()
+    {
+        return $this->hasMany('App\SalesDetail')->where('products_id',1)->count();
+    }
+
+    public function status()
+    {
+        return $this->shipping_status == 1 ? 'Entregado' : 'Pendiente';
+    }
 }

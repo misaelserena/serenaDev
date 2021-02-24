@@ -1,7 +1,7 @@
 @extends('layouts.child_module')
   
 @section('data')
-		{!! Form::open(['route' => 'administration.warehouse.edit', 'method' => 'GET']) !!}	
+		{!! Form::open(['route' => 'administration.inputs.edit', 'method' => 'GET']) !!}	
 			<div class="card">
 				<div class="card-header">
 					BÚSQUEDA DE INVENTARIO
@@ -14,9 +14,9 @@
 						</div>
 						<div class="md-form">
 							<label class="label-form" for="name">Producto</label>
-							<select class="form-control" id="product_id" name="product_id[]" multiple="multiple">
+							<select class="form-control" id="description" name="description[]" multiple="multiple">
 								@foreach(App\Products::where('products.status',1)->orderDescription()->get() as $cat)
-									<option value="{{ $cat->id }}" @if(isset($product_id) && in_array($cat->id, $product_id)) selected="selected" @endif>{{ $cat->code }} - {{ $cat->description }}</option>
+									<option value="{{ $cat->id }}" @if(isset($description) && in_array($cat->id, $description)) selected="selected" @endif>{{ $cat->code }} - {{ $cat->description }}</option>
 								@endforeach
 							</select>
 						</div>
@@ -24,7 +24,7 @@
 					<button class="btn btn-success" type="submit">
 						<svg class="bi" width="20" height="20" fill="currentColor"><use xlink:href="{{ asset("images/bootstrap-icons.svg#search") }}"></use></svg> Buscar
 					</button>
-					<button class="btn btn-info" type="submit" formaction="{{ route('administration.warehouse.export') }}">
+					<button class="btn btn-info" type="submit" formaction="{{ route('administration.inputs.export') }}">
 						<svg class="bi" width="20" height="20" fill="currentColor"><use xlink:href="{{ asset("images/bootstrap-icons.svg#file-spreadsheet") }}"></use></svg> Exportar
 					</button>
 				</div>
@@ -32,7 +32,7 @@
 		{!! Form::close() !!}
 	
 	<br>
-	@if(count($warehouse) > 0)
+	@if(count($inputs) > 0)
 		<div class="table-responsive">
 			<table class="table table-striped">
 				<thead class="text-align-center thead-dark">
@@ -40,25 +40,27 @@
 						<th>ID</th>
 						<th>Cantidad</th>
 						<th>Producto</th>
+						<th>Total</th>
 						<th>Fecha</th>
 						<th>Acci&oacute;n</th>
 					</tr>
 				</thead>
 				<tbody class="text-align-center">
-					@foreach($warehouse as $ware)
+					@foreach($inputs as $input)
 						<tr>
-							<td>{{ $ware->id }}</td>
-							<td>{{ $ware->quantity_ex }}</td>
-							<td>{{ $ware->product->description }}</td>
+							<td>{{ $input->id }}</td>
+							<td>{{ $input->quantity }} {{ $input->unit }}</td>
+							<td>{{ $input->description }}</td>
+							<td>${{ number_format($input->total,2) }}</td>
 							<td>
-								{{ $ware->date }}
+								{{ $input->date }}
 							</td>
 							<td>
-								@if($ware->status == 1)
-									<a href="{{ route('administration.warehouse.show',$ware->id) }}" class='btn btn-info' alt='Editar' title='Editar'>
+								@if($input->status == 1)
+									<a href="{{ route('administration.inputs.show',$input->id) }}" class='btn btn-info' alt='Editar' title='Editar'>
 										<svg class="bi" width="20" height="20" fill="currentColor"><use xlink:href="{{ asset("images/bootstrap-icons.svg#pencil") }}"></use></svg>
 									</a> 
-									<a href="{{ route('administration.warehouse.delete',$ware->id) }}" class='btn-suspend-ware btn btn-danger' alt='Baja' title='Baja'>
+									<a href="{{ route('administration.inputs.delete',$input->id) }}" class='btn-suspend-ware btn btn-danger' alt='Baja' title='Baja'>
 										<svg class="bi" width="20" height="20" fill="currentColor"><use xlink:href="{{ asset("images/bootstrap-icons.svg#trash-fill") }}"></use></svg>
 									</a> 
 								@endif
@@ -70,7 +72,7 @@
 		</div>
 		
 		<center>
-			{{ $warehouse->appends(['product_id'=> $product_id,'date'=>$date])->render() }}
+			{{ $inputs->appends(['description'=> $description,'date'=>$date])->render() }}
 		</center>
 	@else
 		<div class="alert alert-danger" role="alert">Resultado no encontrado</div>
@@ -93,7 +95,7 @@
 			{
 				$("#date").datepicker({ dateFormat: "yy-mm-dd" });
 			});
-			$('[name="product_id[]"]').select2(
+			$('[name="description[]"]').select2(
 			{
 				placeholder				: 'Seleccione un o varios productos',
 				language				: "es",

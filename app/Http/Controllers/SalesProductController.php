@@ -11,7 +11,7 @@ use App\Sales;
 use App\SalesDetail;
 use App\Client;
 use App\Products;
-use App\Warehouse;
+use App\Inputs;
 use Alert;
 use Auth;
 use PDF;
@@ -51,13 +51,14 @@ class SalesProductController extends Controller
 	{
 		if (isset($request->product_id) && count($request->product_id)>0) 
 		{
-			$sales				= new Sales();
-			$sales->client_id	= $request->idClient;
-			$sales->iva			= $request->iva_all;
-			$sales->subtotal	= $request->subtotal_all;
-			$sales->discount	= $request->discount_all;
-			$sales->total		= $request->total_all;
-			$sales->users_id	= Auth::user()->id;
+			$sales					= new Sales();
+			$sales->client_id		= $request->idClient;
+			$sales->iva				= $request->iva_all;
+			$sales->subtotal		= $request->subtotal_all;
+			$sales->discount		= $request->discount_all;
+			$sales->total			= $request->total_all;
+			$sales->users_id		= Auth::user()->id;
+			$sales->shipping_status	= $request->shipping_status;
 			$sales->save();
 
 			for ($i=0; $i < count($request->product_id); $i++) 
@@ -73,16 +74,6 @@ class SalesProductController extends Controller
 				$detail->total			= $request->total[$i];
 				$detail->sales_id		= $sales->id;
 				$detail->save();
-
-				$idWarehouse = Warehouse::where('product_id',$request->product_id[$i])->where('status',1)->first()->id;
-
-				if ($idWarehouse) 
-				{
-					$update 				= Warehouse::find($idWarehouse);
-					$update->quantity_ex 	= $update->quantity_ex-$request->quantity[$i];
-					$update->save();
-				}
-
 			}
 
 			$alert = "swal('','Venta Registrada Exitosamente','success')";
@@ -114,22 +105,28 @@ class SalesProductController extends Controller
 					{
 						$query->whereIn('client_id',$request->client_id);
 					}
+
+					if ($request->shipping_status != "") 
+					{
+						$query->where('shipping_status',$request->shipping_status);
+					}
 				})
 				->orderBy('id','DESC')
 				->paginate(10);
 
 		return view('sales.products.search',
 			[
-				'id'			=> $data['father'],
-				'title'			=> $data['name'],
-				'details'		=> $data['details'],
-				'child_id'		=> $this->module_father,
-				'option_id'		=> $this->module_edit,
-				'sales' 		=> $sales,
-				'mindate' 		=> $request->mindate,
-				'maxdate' 		=> $request->maxdate,
-				'product_id' 	=> $request->product_id,
-				'client_id' 	=> $request->client_id
+				'id'				=> $data['father'],
+				'title'				=> $data['name'],
+				'details'			=> $data['details'],
+				'child_id'			=> $this->module_father,
+				'option_id'			=> $this->module_edit,
+				'sales'				=> $sales,
+				'mindate'			=> $request->mindate,
+				'maxdate'			=> $request->maxdate,
+				'product_id'		=> $request->product_id,
+				'client_id'			=> $request->client_id,
+				'shipping_status'	=> $request->shipping_status
 			]);
 	}
 
@@ -150,7 +147,37 @@ class SalesProductController extends Controller
 
 	public function update(Request $request,$id)
 	{
+		if (isset($request->product_id) && count($request->product_id)>0) 
+		{
+			$sales					= new Sales();
+			$sales->client_id		= $request->idClient;
+			$sales->iva				= $request->iva_all;
+			$sales->subtotal		= $request->subtotal_all;
+			$sales->discount		= $request->discount_all;
+			$sales->total			= $request->total_all;
+			$sales->users_id		= Auth::user()->id;
+			$sales->shipping_status	= $request->shipping_status;
+			$sales->save();
 
+			for ($i=0; $i < count($request->product_id); $i++) 
+			{
+				$detail					= new SalesDetail();
+				$detail->products_id	= $request->product_id[$i];
+				$detail->type_price		= $request->type_price[$i];
+				$detail->quantity		= $request->quantity[$i];
+				$detail->price			= $request->price[$i];
+				$detail->subtotal		= $request->subtotal[$i];
+				$detail->iva			= $request->iva[$i];
+				$detail->discount		= $request->discount[$i];
+				$detail->total			= $request->total[$i];
+				$detail->sales_id		= $sales->id;
+				$detail->save();
+			}
+
+			$alert = "swal('','Venta Actualizada Exitosamente','success')";
+
+			return redirect()->route('sales.product.index')->with('alert',$alert);
+		}
 	}
 
 	public function delete($id)
@@ -198,6 +225,16 @@ class SalesProductController extends Controller
 			}
 			return Response($prods);
 		}
+	}
+
+	public function updateStatus(Request $request,Sales $sale)
+	{
+		$sale->shipping_status = $request->shipping_status;
+		$sale->save();
+
+		$alert = "swal('','Venta Actualizada Exitosamente','success')";
+
+		return redirect()->route('sales.product.show',$sale->id)->with('alert',$alert);
 	}
 
 	public function storeClient(Request $request)

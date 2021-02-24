@@ -252,7 +252,7 @@
 							@foreach($sale->detail as $detail)
 								<tr>
 									<td>
-										{{ $detail->productData->description }}
+										{{ $detail->productData->nameProduct() }}
 									</td>
 									<td>
 										{{ $detail->quantity }}

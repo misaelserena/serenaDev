@@ -79,7 +79,7 @@
 			<div class="container h-100">
 				<div class="row h-100 align-items-center justify-content-center text-center">
 					<div class="col-lg-10 align-self-end">
-						<img class="img-fluid" src="{{ asset('images/logo_cafe_plato.png') }}" alt="" width="20%" />
+						<img class="img-fluid" src="{{ asset('images/logo_cafe_bn_circle.png') }}" alt="" width="20%" />
 						<hr class="divider my-4" />
 					</div>
 					<div class="col-lg-8 align-self-baseline">

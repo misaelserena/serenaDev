@@ -2,33 +2,38 @@
   
 @section('data')
 	<center>
-		{!! Form::open(['route' => 'configuration.user.edit', 'method' => 'GET']) !!}			
-			<div class="container">
+		{!! Form::open(['route' => 'configuration.user.edit', 'method' => 'GET']) !!}	
+		<div class="card">
+			<div class="card-header">
+				BÚSQUEDA
+			</div>
+			<div class="card-body">				
 				<div class="form-group">
-					<div class="col-md-6 mb-3 text-align-left">
+					<div class="md-form">
 						<label for="name">Nombre</label>
-						<input type="text" class="form-control" id="name" name="name" placeholder="Nombre" value="{{ isset($name) ? $name : '' }}">
+						<input type="text" class="form-control" id="name" name="name" value="{{ isset($name) ? $name : '' }}">
 					</div>
 				</div>
 				<div class="form-group">
-					<div class="col-md-6 mb-3 text-align-left">
+					<div class="md-form">
 						<label for="email">Email</label>
-						<input type="text" class="form-control" id="email" name="email" placeholder="Email" value="{{ isset($email) ? $email : '' }}">
+						<input type="text" class="form-control" id="email" name="email" value="{{ isset($email) ? $email : '' }}">
 					</div>
 				</div>
 
 				<div class="form-group">
-					<div class="col-md-6 mb-3 text-align-left">
+					<div>
 						<select class="form-control" name="type" multiple="multiple" title="Tipo de usuario">
 							<option value="0" @if(isset($type) && $type == 0) selected="selected" @endif>Empleado</option>
 							<option value="1" @if(isset($type) && $type == 1) selected="selected" @endif>Usuario del sistema</option>
 						</select>
 					</div>
 				</div>
+				<button class="btn btn-success" type="submit">
+					<svg class="bi" width="20" height="20" fill="currentColor"><use xlink:href="{{ asset("images/bootstrap-icons.svg#search") }}"></use></svg> Buscar
+				</button>
 			</div>
-			<button class="btn btn-success" type="submit">
-				<svg class="bi" width="20" height="20" fill="currentColor"><use xlink:href="{{ asset("images/bootstrap-icons.svg#search") }}"></use></svg> Buscar
-			</button>
+		</div>
 		{!! Form::close() !!}
 	</center>
 	<br>
@@ -110,7 +115,8 @@
 			{
 				placeholder				: 'Tipo de Usuario',
 				language				: "es",
-				maximumSelectionLength	: 1
+				maximumSelectionLength	: 1,
+				width 					: '100%'
 			});
 			$(document).on('click','.btn-destroy-user',function(e)
 			{
