@@ -32,7 +32,7 @@
 			10	=> 'Octubre',
 			11	=> 'Noviembre',
 			12	=> 'Diciembre'
- 		]
+		]
 	@endphp
 	{!! Form::open(['route' => 'reports.administration.inputs-outputs', 'method' => 'GET']) !!}	
 		<div class="card">
@@ -66,9 +66,8 @@
 		</div>
 	{!! Form::close() !!}
 	<p><br></p>
-	<div class="input_output">
-		
-	</div>
+	<div class="input_output"></div>
+	<div class="utility_year"></div>
 @endsection
 @section('scripts')
 	<script type="text/javascript">
@@ -82,6 +81,7 @@
 		$(document).ready(function()
 		{
 			inputsOutputs();
+			utilityYear();
 			$(function() 
 			{
 				$("#mindate,#maxdate").datepicker({ dateFormat: "yy-mm-dd" });
@@ -104,8 +104,8 @@
 		{
 			var options = 
 			{
-			  	series: 
-			  	[
+				series: 
+				[
 					{
 						name: "Salidas",
 						data: 
@@ -134,22 +134,22 @@
 						]
 					}
 				],
-			  	chart: 
-			  	{
-				  	height: 350,
-				  	type: 'line',
-				  	zoom: 
-				  	{
+				chart: 
+				{
+					height: 350,
+					type: 'line',
+					zoom: 
+					{
 						enabled: false
-				 	}
+					}
 				},
 				dataLabels: 
 				{
-			  		enabled: false
+					enabled: false
 				},
 				stroke: 
 				{
-			  		curve: 'straight'
+					curve: 'straight'
 				},
 				markers: 
 				{
@@ -157,20 +157,27 @@
 				},
 				title: 
 				{
-			  		text: 'Entradas vs Salidas',
-			  		align: 'left'
+					text: 'Entradas vs Salidas',
+					align: 'left'
 				},
 				grid: 
 				{
-				  	row: 
-				  	{
+					row: 
+					{
 						colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
 						opacity: 0.5
-				  	},
+					},
 				},
 				xaxis: 
 				{
-			  		categories: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep','Oct','Nov','Dic'],
+					categories: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep','Oct','Nov','Dic'],
+				},
+				yaxis: 
+				{
+					title: 
+					{
+						text: 'Pesos'
+					},
 				}
 			};
 
@@ -178,6 +185,87 @@
 			chart.render();
 		}
 
+		function utilityYear() 
+		{
+			var options = 
+			{
+				series: 
+				[
+					{
+						name: "Entradas",
+						data: 
+						[
+							{{ $dataYear['entradas'] }},
+						]
+					},
+					{
+						name: "Salidas",
+						data: 
+						[
+							{{ $dataYear['salidas'] }},
+						]
+					},
+					{
+						name: "Utilidad",
+						data: 
+						[
+							{{ $dataYear['utilidad'] }},
+						]
+					},
+				],
+				chart: 
+				{
+					height: 300,
+					width: 350,
+					type: 'bar',
+					zoom: 
+					{
+						enabled: false
+					}
+				},
+				dataLabels: 
+				{
+					enabled: true
+				},
+				stroke: 
+				{
+					curve: 'straight'
+				},
+				markers: 
+				{
+					size: 4,
+				},
+				title: 
+				{
+					text: 'Entradas vs Salidas Anuales',
+					align: 'left'
+				},
+				grid: 
+				{
+					row: 
+					{
+						colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+						opacity: 0.5
+					},
+				},
+				xaxis: 
+				{
+					categories: [
+						''
+					]
+				},
+				yaxis: 
+				{
+					title: 
+					{
+						text: 'Pesos'
+					},
+				}
+			};
+
+			var chart = new ApexCharts(document.querySelector(".utility_year"), options);
+			chart.render();
+		}
 		
 	</script>
 @endsection

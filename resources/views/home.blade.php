@@ -53,8 +53,12 @@
 		</section>
 		<p><br></p>
 		<div class="container-charts">
-			<div class="sales_month charts-dashboard"></div>
-			<div class="total_sold_month charts-dashboard"></div>
+			<div class="row">
+				<div class="sales_month col charts-dashboard"></div>
+				<div class="total_sold_month col charts-dashboard"></div>
+				<div class="utility_year col charts-dashboard"></div>
+				<div class="chart_total_year col charts-dashboard"></div>
+			</div>
 		</div>
 @endsection
 @section('scripts')
@@ -71,6 +75,8 @@
 		{
 			product();
 			circleSold();
+			chartTotalSoldYear();
+			utilityYear();
 			$(function() 
 			{
 				$("#mindate,#maxdate").datepicker({ dateFormat: "yy-mm-dd" });
@@ -106,8 +112,8 @@
 				],
 				chart: 
 				{
-					height: 300,
-					width: 350,
+					height: 350,
+					width: 460,
 					type: 'bar',
 					zoom: 
 					{
@@ -144,6 +150,13 @@
 					categories: [
 						''
 					]
+				},
+				yaxis: 
+				{
+					title: 
+					{
+						text: 'Cantidad de productos'
+					},
 				}
 			};
 
@@ -169,8 +182,8 @@
 				],
 				chart: 
 				{
-					height: 300,
-					width: 350,
+					height: 350,
+					width: 460,
 					type: 'bar',
 					zoom: 
 					{
@@ -207,10 +220,167 @@
 					categories: [
 						''
 					]
+				},
+				yaxis: 
+				{
+					title: 
+					{
+						text: 'Pesos'
+					},
 				}
 			};
 
 			var chart = new ApexCharts(document.querySelector(".total_sold_month"), options);
+			chart.render();
+		}
+
+		function chartTotalSoldYear()
+		{
+			var options = 
+			{
+				series: 
+				[
+					{
+						name: "Total",
+						data: 
+						[
+							@foreach($salesForMonth['totalSold'] as $countSale)
+								{{ $countSale }},
+							@endforeach
+						]
+					}
+				],
+				chart: 
+				{
+					height: 350,
+					width: 460,
+					type: 'line',
+					zoom: 
+					{
+						enabled: false
+					}
+				},
+				dataLabels: 
+				{
+					enabled: false
+				},
+				stroke: 
+				{
+					curve: 'straight'
+				},
+				markers: 
+				{
+					size: 4,
+				},
+				title: 
+				{
+					text: 'Total Vendido Por Mes',
+					align: 'left'
+				},
+				grid: 
+				{
+					row: 
+					{
+						colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+						opacity: 0.5
+					},
+				},
+				xaxis: 
+				{
+					categories: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep','Oct','Nov','Dic'],
+				},
+				yaxis: 
+				{
+					title: 
+					{
+						text: 'Pesos'
+					},
+				}
+			};
+
+			var chart = new ApexCharts(document.querySelector(".chart_total_year"), options);
+			chart.render();
+		}
+
+		function utilityYear() 
+		{
+			var options = 
+			{
+				series: 
+				[
+					{
+						name: "Entradas",
+						data: 
+						[
+							{{ $dataYear['entradas'] }},
+						]
+					},
+					{
+						name: "Salidas",
+						data: 
+						[
+							{{ $dataYear['salidas'] }},
+						]
+					},
+					{
+						name: "Utilidad",
+						data: 
+						[
+							{{ $dataYear['utilidad'] }},
+						]
+					},
+				],
+				chart: 
+				{
+					height: 350,
+					width: 460,
+					type: 'bar',
+					zoom: 
+					{
+						enabled: false
+					}
+				},
+				dataLabels: 
+				{
+					enabled: true
+				},
+				stroke: 
+				{
+					curve: 'straight'
+				},
+				markers: 
+				{
+					size: 4,
+				},
+				title: 
+				{
+					text: 'Entradas vs Salidas Anuales',
+					align: 'left'
+				},
+				grid: 
+				{
+					row: 
+					{
+						colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+						opacity: 0.5
+					},
+				},
+				xaxis: 
+				{
+					categories: [
+						''
+					]
+				},
+				yaxis: 
+				{
+					title: 
+					{
+						text: 'Pesos'
+					},
+				}
+			};
+
+			var chart = new ApexCharts(document.querySelector(".utility_year"), options);
 			chart.render();
 		}
 	</script>

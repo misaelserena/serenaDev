@@ -10,6 +10,7 @@ use App\Mail\SendMailable;
 use Carbon\Carbon;
 use App\Sales;
 use App\SalesDetail;
+use App\Inputs;
 
 class HomeController extends Controller
 {
@@ -31,18 +32,31 @@ class HomeController extends Controller
 		{
 			$product[$key]['description']	= $value->first()->productData->nameProduct();
 			$product[$key]['quantity']		= $value->sum('quantity');
-			$product[$key]['totalSold'] 	= $value->sum('total');
+			$product[$key]['totalSold']		= $value->sum('total');
 			$key++;
 		}
 
-		$dashboard['total_month'] 	= Sales::whereMonth('created_at',date('m'))->sum('total');
-		$dashboard['shipping_pend'] = Sales::where('shipping_status',0)->count();
+		$dashboard['total_month']	= Sales::whereMonth('created_at',date('m'))->sum('total');
+		$dashboard['shipping_pend']	= Sales::where('shipping_status',0)->count();
 
-		//return $product;
+		$salesForMonth = [];
+		for ($i=1; $i < 13; $i++) 
+		{ 
+			$salesForMonth['month'][$i]		= Sales::whereMonth('created_at',$i)->count();
+			$salesForMonth['totalSold'][$i]	= Sales::whereMonth('created_at',$i)->sum('total');
+		}
+
+		$dataYear = [];
+		$dataYear['salidas']	= Sales::whereYear('created_at',date('Y'))->sum('total');
+		$dataYear['entradas']	= Inputs::whereYear('date',date('Y'))->where('status',1)->sum('total');
+		$dataYear['utilidad']	= $dataYear['salidas'] - $dataYear['entradas'];
+
 		return view('home',
 		[
-			'product'	=> $product,
-			'dashboard' => $dashboard
+			'product'		=> $product,
+			'dashboard'		=> $dashboard,
+			'salesForMonth'	=> $salesForMonth,
+			'dataYear'		=> $dataYear
 		]);
 	}
 

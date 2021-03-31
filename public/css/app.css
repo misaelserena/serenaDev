@@ -12394,7 +12394,6 @@ input[type=radio] + label.check-small {
 .charts-dashboard {
   margin: 10px;
   border-radius: 5px;
-  border: 1px solid #1f5b70;
   background: white;
   width: 350px;
   box-shadow: 1px 1px 5px;

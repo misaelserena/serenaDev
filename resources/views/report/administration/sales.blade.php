@@ -153,75 +153,77 @@
 		{
 			var options = 
 			{
-			  	series: [{
-				  	name: 'Total',
-				  	data: 
-					[
-						@foreach($productSold['total'] as $total)
-							{{ $total }},
+				series: [
+					
+						@foreach($productSold as $total)
+							{
+								name: '{{ $total['name'] }}',
+								data: 
+								[
+									{{ $total['total'] }},
+								]
+							},
 						@endforeach
-					]
-				}],
+					
+				],
 				chart: 
 				{
-				  	height: 350,
-				  	type: 'bar',
+					height: 350,
+					type: 'bar',
 				},
 				plotOptions: 
 				{
-				  	bar: 
-				  	{
+					bar: 
+					{
 						dataLabels: 
 						{
-					  		position: 'center', // top, center, bottom
+							position: 'center', // top, center, bottom
 						},
-				  	}
+					}
 				},
 				dataLabels: 
 				{
-				  	enabled: true,
-				  	offsetY: 0,
-				  	style: 
-				  	{
+					enabled: true,
+					offsetY: 0,
+					style: 
+					{
 						fontSize: '12px',
 						colors: ["#fff"]
-				  	}
+					}
 				},
 			
 				xaxis: 
 				{
-				  	categories: [
-						@foreach($productSold['name'] as $name)
-							'{{ $name }}',
-						@endforeach
-				  	],
-				  	axisBorder: 
-				  	{
+					categories: [
+						''
+					],
+					axisBorder: 
+					{
 						show: false
-				  	},
-				  	axisTicks: 
-				  	{
+					},
+					axisTicks: 
+					{
 						show: false
-				  	},
-				  	crosshairs: 
-				  	{
+					},
+					crosshairs: 
+					{
 						fill: 
 						{
-						  	type: 'gradient',
-						  	gradient: 
-						  	{
+							type: 'gradient',
+							gradient: 
+							{
 								colorFrom: '#D8E3F0',
 								colorTo: '#BED1E6',
 								stops: [0, 100],
 								opacityFrom: 0.4,
 								opacityTo: 0.5,
-						  	}
+							}
 						}
-				  	},
-				  	tooltip: 
-				  	{
+					},
+					tooltip: 
+					{
 						enabled: true,
-				  	}
+					}
 				},
 				yaxis: 
 				{
@@ -233,7 +235,10 @@
 					{
 						show: false,
 					},
-				
+					title: 
+					{
+						text: 'Número de productos'
+					},
 				},
 				title: 
 				{
@@ -255,8 +260,8 @@
 		{
 			var options = 
 			{
-			  	series: 
-			  	[
+				series: 
+				[
 					{
 						name: "Ventas",
 						data: 
@@ -267,22 +272,22 @@
 						]
 					}
 				],
-			  	chart: 
-			  	{
-				  	height: 350,
-				  	type: 'line',
-				  	zoom: 
-				  	{
+				chart: 
+				{
+					height: 350,
+					type: 'line',
+					zoom: 
+					{
 						enabled: false
-				 	}
+					}
 				},
 				dataLabels: 
 				{
-			  		enabled: false
+					enabled: false
 				},
 				stroke: 
 				{
-			  		curve: 'straight'
+					curve: 'straight'
 				},
 				markers: 
 				{
@@ -290,20 +295,27 @@
 				},
 				title: 
 				{
-			  		text: 'Ventas Por Mes',
-			  		align: 'left'
+					text: 'Ventas Por Mes',
+					align: 'left'
 				},
 				grid: 
 				{
-				  	row: 
-				  	{
+					row: 
+					{
 						colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
 						opacity: 0.5
-				  	},
+					},
 				},
 				xaxis: 
 				{
-			  		categories: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep','Oct','Nov','Dic'],
+					categories: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep','Oct','Nov','Dic'],
+				},
+				yaxis: 
+				{
+					title: 
+					{
+						text: 'Número de ventas'
+					},
 				}
 			};
 
@@ -315,8 +327,8 @@
 		{
 			var options = 
 			{
-			  	series: 
-			  	[
+				series: 
+				[
 					{
 						name: "Total",
 						data: 
@@ -327,22 +339,22 @@
 						]
 					}
 				],
-			  	chart: 
-			  	{
-				  	height: 350,
-				  	type: 'line',
-				  	zoom: 
-				  	{
+				chart: 
+				{
+					height: 350,
+					type: 'line',
+					zoom: 
+					{
 						enabled: false
-				 	}
+					}
 				},
 				dataLabels: 
 				{
-			  		enabled: false
+					enabled: false
 				},
 				stroke: 
 				{
-			  		curve: 'straight'
+					curve: 'straight'
 				},
 				markers: 
 				{
@@ -350,20 +362,27 @@
 				},
 				title: 
 				{
-			  		text: 'Total Vendido Por Mes',
-			  		align: 'left'
+					text: 'Total Vendido Por Mes',
+					align: 'left'
 				},
 				grid: 
 				{
-				  	row: 
-				  	{
+					row: 
+					{
 						colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
 						opacity: 0.5
-				  	},
+					},
 				},
 				xaxis: 
 				{
-			  		categories: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep','Oct','Nov','Dic'],
+					categories: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep','Oct','Nov','Dic'],
+				},
+				yaxis: 
+				{
+					title: 
+					{
+						text: 'Pesos'
+					},
 				}
 			};
 

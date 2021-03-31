@@ -76,10 +76,12 @@ class ReportAdministrationController extends Controller
 		}
 
 		$productSold = [];
-		foreach (Products::all() as $key => $product) 
+		$key = 0;
+		foreach (Products::all() as $product) 
 		{
-			$productSold['name'][$key] 	= strtolower($product->nameProduct());
-			$productSold['total'][$key] = $product->quantitySold();
+			$productSold[$key]['name'] 	= strtolower($product->nameProduct());
+			$productSold[$key]['total'] = $product->quantitySold();
+			$key++;
 		}
 
 		return view('report.administration.sales',
@@ -110,6 +112,11 @@ class ReportAdministrationController extends Controller
 			$dataIntOut['utility'][$i] 	= $dataIntOut['outputs'][$i]-$dataIntOut['inputs'][$i];
 		}
 
+		$dataYear = [];
+		$dataYear['salidas']	= Sales::whereYear('created_at',date('Y'))->sum('total');
+		$dataYear['entradas']	= Inputs::whereYear('date',date('Y'))->where('status',1)->sum('total');
+		$dataYear['utilidad']	= $dataYear['salidas'] - $dataYear['entradas'];
+
 		return view('report.administration.inputs_outputs',
 			[
 				'id'			=> $data['father'],
@@ -117,7 +124,8 @@ class ReportAdministrationController extends Controller
 				'details'		=> $data['details'],
 				'child_id'		=> 28,
 				'option_id'		=> 31,
-				'dataIntOut' 	=> $dataIntOut
+				'dataIntOut' 	=> $dataIntOut,
+				'dataYear' 		=> $dataYear
 			]);
 	}
 

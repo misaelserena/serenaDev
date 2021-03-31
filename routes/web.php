@@ -12,7 +12,7 @@
 */
 #Route::get('/layout', 'HomeController@menu');
 
-Route::get('/', function () 
+Route::get('/', function ()
 {
     return view('welcome');
 });
@@ -39,24 +39,27 @@ Route::get('/update', 'HomeController@updateTax');
 | Configuration User Routes
 |--------------------------------------------------------------------------
 */
-Route::group(['middleware' => ['permission:10']], function () 
+Route::group(['middleware' => ['permission:10']], function ()
 {
-	Route::get('/configuration/user', 'ConfigurationUsersController@index')->name('configuration.user.index'); 
-	Route::get('/configuration/user/create', 'ConfigurationUsersController@create')->name('configuration.user.create'); 
-	Route::post('/configuration/user/store', 'ConfigurationUsersController@store')->name('configuration.user.store'); 
-	Route::get('/configuration/user/edit', 'ConfigurationUsersController@edit')->name('configuration.user.edit'); 
-	Route::get('/configuration/user/edit/{id}', 'ConfigurationUsersController@show')->name('configuration.user.show'); 
-	Route::put('/configuration/user/edit/{id}/update', 'ConfigurationUsersController@update')->name('configuration.user.update'); 
-	Route::get('/configuration/user/search/user', 'ConfigurationUsersController@getData')->name('user.configuration.search.user'); 
-	Route::get('/configuration/user/getentdep', 'ConfigurationUsersController@getEntDep')->name('configuration.user.entdep'); 
-	Route::get('/configuration/user/search/module', 'ConfigurationUsersController@getMod')->name('user.configuration.search.module');
-	Route::post('/configuration/user/validate','ConfigurationUsersController@validation')->name('configuration.user.validation');
-	Route::get('/configuration/user/{id}/suspend','ConfigurationUsersController@suspend')->name('configuration.user.suspend');
-	Route::get('/configuration/user/{id}/reentry','ConfigurationUsersController@reentry')->name('configuration.user.reentry');
-	Route::get('/configuration/user/{id}/delete','ConfigurationUsersController@delete')->name('configuration.user.delete');
-	Route::post('/configuration/user/module/permission','ConfigurationUsersController@modulePermission')->name('configuration.user.module.permission');
-	Route::post('/configuration/user/module/permission/update','ConfigurationUsersController@modulePermissionUpdate')->name('configuration.user.module.permission.update');
-	Route::post('/configuration/user/module/permission/update-simple','ConfigurationUsersController@modulePermissionUpdateSimple')->name('configuration.user.module.permission.update.simple');
+	Route::get('/configuration/user', 'ConfigurationUsersController@index')->name('configuration.user.index');
+	Route::prefix('/configuration/user')->group(function ()
+	{
+		Route::get('/create', 'ConfigurationUsersController@create')->name('configuration.user.create');
+		Route::post('/store', 'ConfigurationUsersController@store')->name('configuration.user.store');
+		Route::get('/edit', 'ConfigurationUsersController@edit')->name('configuration.user.edit');
+		Route::get('/edit/{id}', 'ConfigurationUsersController@show')->name('configuration.user.show');
+		Route::put('/edit/{id}/update', 'ConfigurationUsersController@update')->name('configuration.user.update');
+		Route::get('/search/user', 'ConfigurationUsersController@getData')->name('user.configuration.search.user');
+		Route::get('/getentdep', 'ConfigurationUsersController@getEntDep')->name('configuration.user.entdep');
+		Route::get('/search/module', 'ConfigurationUsersController@getMod')->name('user.configuration.search.module');
+		Route::post('/validate','ConfigurationUsersController@validation')->name('configuration.user.validation');
+		Route::get('/{id}/suspend','ConfigurationUsersController@suspend')->name('configuration.user.suspend');
+		Route::get('/{id}/reentry','ConfigurationUsersController@reentry')->name('configuration.user.reentry');
+		Route::get('/{id}/delete','ConfigurationUsersController@delete')->name('configuration.user.delete');
+		Route::post('/module/permission','ConfigurationUsersController@modulePermission')->name('configuration.user.module.permission');
+		Route::post('/module/permission/update','ConfigurationUsersController@modulePermissionUpdate')->name('configuration.user.module.permission.update');
+		Route::post('/module/permission/update-simple','ConfigurationUsersController@modulePermissionUpdateSimple')->name('configuration.user.module.permission.update.simple');
+	});
 });
 
 /*
@@ -64,64 +67,76 @@ Route::group(['middleware' => ['permission:10']], function ()
 | Configuration Module Routes
 |--------------------------------------------------------------------------
 */
-Route::group(['middleware' => ['permission:7']], function () 
+Route::group(['middleware' => ['permission:7']], function ()
 {
-	Route::get('/configuration/module', 'ConfigurationModulesController@index')->name('configuration.module.index'); 
-	Route::get('/configuration/module/create', 'ConfigurationModulesController@create')->name('configuration.module.create'); 
-	Route::post('/configuration/module/store', 'ConfigurationModulesController@store')->name('configuration.module.store'); 
-	Route::get('/configuration/module/edit', 'ConfigurationModulesController@edit')->name('configuration.module.edit'); 
-	Route::get('/configuration/module/edit/{id}', 'ConfigurationModulesController@show')->name('configuration.module.show'); 
-	Route::put('/configuration/module/edit/{id}/update', 'ConfigurationModulesController@update')->name('configuration.module.update'); 
-	Route::get('/configuration/module/getchild', 'ConfigurationModulesController@getChild')->name('configuration.module.getchild'); 
-	Route::get('/configuration/module/{id}/delete','ConfigurationModulesController@delete')->name('configuration.module.delete');
+	Route::get('/configuration/module', 'ConfigurationModulesController@index')->name('configuration.module.index');
+	Route::prefix('/configuration/module')->group(function ()
+	{
+		Route::get('/create', 'ConfigurationModulesController@create')->name('configuration.module.create');
+		Route::post('/store', 'ConfigurationModulesController@store')->name('configuration.module.store');
+		Route::get('/edit', 'ConfigurationModulesController@edit')->name('configuration.module.edit');
+		Route::get('/edit/{id}', 'ConfigurationModulesController@show')->name('configuration.module.show');
+		Route::put('/edit/{id}/update', 'ConfigurationModulesController@update')->name('configuration.module.update');
+		Route::get('/getchild', 'ConfigurationModulesController@getChild')->name('configuration.module.getchild');
+		Route::get('/{id}/delete','ConfigurationModulesController@delete')->name('configuration.module.delete');
+	});
 });
 /*
 |--------------------------------------------------------------------------
 | Administration Client Routes
 |--------------------------------------------------------------------------
 */
-Route::group(['middleware' => ['permission:13']], function () 
+Route::group(['middleware' => ['permission:13']], function ()
 {
-	Route::get('/administration/client', 'AdministrationClientController@index')->name('administration.client.index'); 
-	Route::get('/administration/client/create', 'AdministrationClientController@create')->name('administration.client.create'); 
-	Route::post('/administration/client/store', 'AdministrationClientController@store')->name('administration.client.store'); 
-	Route::get('/administration/client/edit', 'AdministrationClientController@edit')->name('administration.client.edit'); 
-	Route::get('/administration/client/edit/{id}', 'AdministrationClientController@show')->name('administration.client.show'); 
-	Route::put('/administration/client/edit/{id}/update', 'AdministrationClientController@update')->name('administration.client.update'); 
-	Route::get('/administration/client/{id}/delete','AdministrationClientController@delete')->name('administration.client.delete');
+	Route::get('/administration/client', 'AdministrationClientController@index')->name('administration.client.index');
+	Route::prefix('/administration/client')->group(function ()
+	{
+		Route::get('/create', 'AdministrationClientController@create')->name('administration.client.create');
+		Route::post('/store', 'AdministrationClientController@store')->name('administration.client.store');
+		Route::get('/edit', 'AdministrationClientController@edit')->name('administration.client.edit');
+		Route::get('/edit/{id}', 'AdministrationClientController@show')->name('administration.client.show');
+		Route::put('/edit/{id}/update', 'AdministrationClientController@update')->name('administration.client.update');
+		Route::get('/{id}/delete','AdministrationClientController@delete')->name('administration.client.delete');
+	});
 });
 /*
 |--------------------------------------------------------------------------
 | Configuration Cat Product Routes
 |--------------------------------------------------------------------------
 */
-Route::group(['middleware' => ['permission:19']], function () 
+Route::group(['middleware' => ['permission:19']], function ()
 {
-	Route::get('/configuration/product', 'ConfigurationProductController@index')->name('configuration.product.index'); 
-	Route::get('/configuration/product/create', 'ConfigurationProductController@create')->name('configuration.product.create'); 
-	Route::post('/configuration/product/store', 'ConfigurationProductController@store')->name('configuration.product.store'); 
-	Route::get('/configuration/product/edit', 'ConfigurationProductController@edit')->name('configuration.product.edit'); 
-	Route::get('/configuration/product/edit/{id}', 'ConfigurationProductController@show')->name('configuration.product.show'); 
-	Route::put('/configuration/product/edit/{id}/update', 'ConfigurationProductController@update')->name('configuration.product.update'); 
-	Route::get('/configuration/product/{id}/delete','ConfigurationProductController@delete')->name('configuration.product.delete');
+	Route::get('/configuration/product', 'ConfigurationProductController@index')->name('configuration.product.index');
+	Route::prefix('/configuration/product')->group(function ()
+	{
+		Route::get('/create', 'ConfigurationProductController@create')->name('configuration.product.create');
+		Route::post('/store', 'ConfigurationProductController@store')->name('configuration.product.store');
+		Route::get('/edit', 'ConfigurationProductController@edit')->name('configuration.product.edit');
+		Route::get('/edit/{id}', 'ConfigurationProductController@show')->name('configuration.product.show');
+		Route::put('/edit/{id}/update', 'ConfigurationProductController@update')->name('configuration.product.update');
+		Route::get('/{id}/delete','ConfigurationProductController@delete')->name('configuration.product.delete');
+	});
 });
 /*
 |--------------------------------------------------------------------------
 | Administration Warehouse Routes
 |--------------------------------------------------------------------------
 */
-Route::group(['middleware' => ['permission:22']], function () 
+Route::group(['middleware' => ['permission:22']], function ()
 {
-	Route::get('/administration/inputs', 'AdministrationInputsController@index')->name('administration.inputs.index'); 
-	Route::get('/administration/inputs/create', 'AdministrationInputsController@create')->name('administration.inputs.create'); 
-	Route::post('/administration/inputs/store', 'AdministrationInputsController@store')->name('administration.inputs.store'); 
-	Route::get('/administration/inputs/edit', 'AdministrationInputsController@edit')->name('administration.inputs.edit'); 
-	Route::get('/administration/inputs/edit/{id}', 'AdministrationInputsController@show')->name('administration.inputs.show'); 
-	Route::put('/administration/inputs/edit/{id}/update', 'AdministrationInputsController@update')->name('administration.inputs.update'); 
-	Route::get('/administration/inputs/{id}/delete','AdministrationInputsController@delete')->name('administration.inputs.delete');
-	Route::get('/administration/inputs/get-product', 'AdministrationInputsController@getProduct'); 
-	Route::get('/administration/inputs/get-inputs', 'AdministrationInputsController@getWarehouse'); 
-	Route::get('/administration/inputs/export', 'AdministrationInputsController@export')->name('administration.inputs.export'); 
+	Route::get('/administration/inputs', 'AdministrationInputsController@index')->name('administration.inputs.index');
+	Route::prefix('/administration/inputs')->group(function ()
+	{
+		Route::get('/create', 'AdministrationInputsController@create')->name('administration.inputs.create');
+		Route::post('/store', 'AdministrationInputsController@store')->name('administration.inputs.store');
+		Route::get('/edit', 'AdministrationInputsController@edit')->name('administration.inputs.edit');
+		Route::get('/edit/{id}', 'AdministrationInputsController@show')->name('administration.inputs.show');
+		Route::put('/edit/{id}/update', 'AdministrationInputsController@update')->name('administration.inputs.update');
+		Route::get('/{id}/delete','AdministrationInputsController@delete')->name('administration.inputs.delete');
+		Route::get('/get-product', 'AdministrationInputsController@getProduct');
+		Route::get('/get-inputs', 'AdministrationInputsController@getWarehouse');
+		Route::get('/export', 'AdministrationInputsController@export')->name('administration.inputs.export');
+	});
 });
 
 /*
@@ -129,15 +144,18 @@ Route::group(['middleware' => ['permission:22']], function ()
 | Administration Provider Routes
 |--------------------------------------------------------------------------
 */
-Route::group(['middleware' => ['permission:25']], function () 
+Route::group(['middleware' => ['permission:25']], function ()
 {
-	Route::get('/administration/provider', 'AdministrationProviderController@index')->name('administration.provider.index'); 
-	Route::get('/administration/provider/create', 'AdministrationProviderController@create')->name('administration.provider.create'); 
-	Route::post('/administration/provider/store', 'AdministrationProviderController@store')->name('administration.provider.store'); 
-	Route::get('/administration/provider/edit', 'AdministrationProviderController@edit')->name('administration.provider.edit'); 
-	Route::get('/administration/provider/edit/{id}', 'AdministrationProviderController@show')->name('administration.provider.show'); 
-	Route::put('/administration/provider/edit/{id}/update', 'AdministrationProviderController@update')->name('administration.provider.update'); 
-	Route::get('/administration/provider/{id}/delete','AdministrationProviderController@delete')->name('administration.provider.delete');
+	Route::get('/administration/provider', 'AdministrationProviderController@index')->name('administration.provider.index');
+	Route::prefix('/administration/provider')->group(function ()
+	{
+		Route::get('/create', 'AdministrationProviderController@create')->name('administration.provider.create');
+		Route::post('/store', 'AdministrationProviderController@store')->name('administration.provider.store');
+		Route::get('/edit', 'AdministrationProviderController@edit')->name('administration.provider.edit');
+		Route::get('/edit/{id}', 'AdministrationProviderController@show')->name('administration.provider.show');
+		Route::put('/edit/{id}/update', 'AdministrationProviderController@update')->name('administration.provider.update');
+		Route::get('/{id}/delete','AdministrationProviderController@delete')->name('administration.provider.delete');
+	});
 });
 
 /*
@@ -145,20 +163,23 @@ Route::group(['middleware' => ['permission:25']], function ()
 | Sales Product Routes
 |--------------------------------------------------------------------------
 */
-Route::group(['middleware' => ['permission:16']], function () 
+Route::group(['middleware' => ['permission:16']], function ()
 {
-	Route::get('/sales/product', 'SalesProductController@index')->name('sales.product.index'); 
-	Route::get('/sales/product/create', 'SalesProductController@create')->name('sales.product.create'); 
-	Route::post('/sales/product/store', 'SalesProductController@store')->name('sales.product.store'); 
-	Route::get('/sales/product/edit', 'SalesProductController@edit')->name('sales.product.edit'); 
-	Route::get('/sales/product/edit/{id}', 'SalesProductController@show')->name('sales.product.show'); 
-	Route::put('/sales/product/edit/{id}/update', 'SalesProductController@update')->name('sales.product.update'); 
-	Route::put('/sales/product/edit/{sale}/update-status', 'SalesProductController@updateStatus')->name('sales.product.update-status'); 
-	Route::get('/sales/product/{id}/delete','SalesProductController@delete')->name('sales.product.delete');
-	Route::get('/sales/product/get-client', 'SalesProductController@getClients')->name('sales.product.get-clients'); 
-	Route::post('/sales/product/store-client', 'SalesProductController@storeClient')->name('sales.product.store-client');
-	Route::get('/sales/product/update-list','SalesProductController@updateList');
-	Route::get('/sales/product/document/download/{id}','SalesProductController@downloadDocument')->name('sales.download.document');
+	Route::get('/sales/product', 'SalesProductController@index')->name('sales.product.index');
+	Route::prefix('/sales/product')->group(function ()
+	{
+		Route::get('/create', 'SalesProductController@create')->name('sales.product.create');
+		Route::post('/store', 'SalesProductController@store')->name('sales.product.store');
+		Route::get('/edit', 'SalesProductController@edit')->name('sales.product.edit');
+		Route::get('/edit/{id}', 'SalesProductController@show')->name('sales.product.show');
+		Route::put('/edit/{id}/update', 'SalesProductController@update')->name('sales.product.update');
+		Route::put('/edit/{sale}/update-status', 'SalesProductController@updateStatus')->name('sales.product.update-status');
+		Route::get('/{id}/delete','SalesProductController@delete')->name('sales.product.delete');
+		Route::get('/get-client', 'SalesProductController@getClients')->name('sales.product.get-clients');
+		Route::post('/store-client', 'SalesProductController@storeClient')->name('sales.product.store-client');
+		Route::get('/update-list','SalesProductController@updateList');
+		Route::get('/document/download/{id}','SalesProductController@downloadDocument')->name('sales.download.document');
+	});
 
 });
 
@@ -171,8 +192,34 @@ Route::group(['middleware' => ['permission:4']], function()
 {
 	Route::get('/reports','ReportAdministrationController@index')->name('reports.index');
 	Route::get('/reports/administration','ReportAdministrationController@administration')->name('reports.administration');
-	Route::get('/reports/administration/sales','ReportAdministrationController@reportSales')->name('reports.administration.sales');
-	Route::get('/reports/administration/inputs-outputs','ReportAdministrationController@inputsOutputs')->name('reports.administration.inputs-outputs');
+	Route::prefix('/reports/administration')->group(function ()
+	{
+		Route::get('/sales','ReportAdministrationController@reportSales')->name('reports.administration.sales');
+		Route::get('/inputs-outputs','ReportAdministrationController@inputsOutputs')->name('reports.administration.inputs-outputs');
+	});
+});
+
+/*
+|--------------------------------------------------------------------------
+| Sales Product Report Routes
+|--------------------------------------------------------------------------
+*/
+Route::group(['middleware' => ['permission:32']], function ()
+{
+	Route::get('/administration/partners','AdministrationPartnersController@index')->name('partners.index');
+	Route::prefix('/administration/partners')->group(function ()
+	{
+        Route::get('/create','AdministrationPartnersController@create')->name('partners.create');
+	});
+});
+
+Route::group(['middleware' => ['permission:35']], function ()
+{
+	Route::get('/administration/payments','AdministrationPaymentsController@index')->name('payments.index');
+	Route::prefix('/administration/payments')->group(function ()
+	{
+
+	});
 });
 
 
@@ -184,8 +231,8 @@ Route::group(['middleware' => ['permission:4']], function()
 |--------------------------------------------------------------------------
 */
 Route::get('/configuration/role/search/role', 'ConfiguracionRolController@getData')->name('role.search.role');
-Route::get('/configuration/role/search/module', 'ConfiguracionRolController@getMod')->name('role.search.module');  
-Route::get('/configuration/role/search/roles', 'ConfiguracionRolController@getModules')->name('role.search.roles'); 
+Route::get('/configuration/role/search/module', 'ConfiguracionRolController@getMod')->name('role.search.module');
+Route::get('/configuration/role/search/roles', 'ConfiguracionRolController@getModules')->name('role.search.roles');
 Route::get('/configuration/role/search','ConfiguracionRolController@search');
 Route::delete('/configuration/role/search/{id}/inactive', 'ConfiguracionRolController@inactive')->name('role.inactive');
 Route::delete('/configuration/role/search/{id}/reactive', 'ConfiguracionRolController@reactive')->name('role.reactive');
@@ -207,7 +254,7 @@ Route::resource('configuration/places', 'ConfiguracionLugaresTrabajoController')
 |--------------------------------------------------------------------------
 */
 Route::get('/configuration/enterprise/search','ConfiguracionEmpresaController@search');
-Route::get('/configuration/enterprise/search/search', 'ConfiguracionEmpresaController@getData')->name('enterprise.search.search'); 
+Route::get('/configuration/enterprise/search/search', 'ConfiguracionEmpresaController@getData')->name('enterprise.search.search');
 Route::delete('/configuration/enterprise/search/{id}/inactive', 'ConfiguracionEmpresaController@inactive')->name('enterprise.inactive');
 Route::delete('/configuration/enterprise/search/{id}/reactive', 'ConfiguracionEmpresaController@reactive')->name('enterprise.reactive');
 Route::post('/configuration/enterprise/validate','ConfiguracionEmpresaController@validation')->name('enterprise.validation');
@@ -219,7 +266,7 @@ Route::resource('configuration/enterprise', 'ConfiguracionEmpresaController');
 |--------------------------------------------------------------------------
 */
 Route::get('/configuration/area/search','ConfiguracionAreaController@search');
-Route::get('/configuration/area/search/search', 'ConfiguracionAreaController@getData')->name('area.search.search'); 
+Route::get('/configuration/area/search/search', 'ConfiguracionAreaController@getData')->name('area.search.search');
 Route::delete('/configuration/area/search/{id}/inactive', 'ConfiguracionAreaController@inactive')->name('area.inactive');
 Route::delete('/configuration/area/search/{id}/reactive', 'ConfiguracionAreaController@reactive')->name('area.reactive');
 Route::post('/configuration/area/validate','ConfiguracionAreaController@validation')->name('area.validation');
@@ -230,7 +277,7 @@ Route::resource('configuration/area', 'ConfiguracionAreaController');
 |--------------------------------------------------------------------------
 */
 Route::get('/configuration/department/search','ConfiguracionDepartamentoController@search');
-Route::get('/configuration/department/search/search', 'ConfiguracionDepartamentoController@getData')->name('department.search.search'); 
+Route::get('/configuration/department/search/search', 'ConfiguracionDepartamentoController@getData')->name('department.search.search');
 Route::delete('/configuration/department/search/{id}/inactive', 'ConfiguracionDepartamentoController@inactive')->name('department.inactive');
 Route::delete('/configuration/department/search/{id}/reactive', 'ConfiguracionDepartamentoController@reactive')->name('department.reactive');
 Route::post('/configuration/department/validate','ConfiguracionDepartamentoController@validation')->name('department.validation');
@@ -316,7 +363,7 @@ Route::post('administration/billing/nomina/queue','AdministracionFacturacionCont
 */
 Route::get('/configuration/project/search','ConfiguracionProyectoController@search')->name('project.search'); ;
 Route::get('/configuration/project/export','ConfiguracionProyectoController@export')->name('project.export'); ;
-Route::get('/configuration/project/search/search', 'ConfiguracionProyectoController@getData')->name('project.search.search'); 
+Route::get('/configuration/project/search/search', 'ConfiguracionProyectoController@getData')->name('project.search.search');
 Route::post('/configuration/project/validate','ConfiguracionProyectoController@validation')->name('project.validation');
 Route::delete('/configuration/project/{id}/edit','ConfiguracionProyectoController@repair')->name('project.repair');
 Route::resource('configuration/project','ConfiguracionProyectoController');
@@ -327,7 +374,7 @@ Route::resource('configuration/project','ConfiguracionProyectoController');
 |--------------------------------------------------------------------------
 */
 Route::get('/configuration/account/search','ConfiguracionCuentasController@search')->name('account.search');
-Route::get('/configuration/account/search/search', 'ConfiguracionCuentasController@getData')->name('account.search.search'); 
+Route::get('/configuration/account/search/search', 'ConfiguracionCuentasController@getData')->name('account.search.search');
 Route::post('/configuration/account/validate','ConfiguracionCuentasController@validation')->name('account.validation');
 Route::resource('configuration/account','ConfiguracionCuentasController');
 
@@ -337,7 +384,7 @@ Route::resource('configuration/account','ConfiguracionCuentasController');
 |--------------------------------------------------------------------------
 */
 Route::get('/configuration/responsibility/search','ConfiguracionResponsabilidadesController@search')->name('responsibility.search');
-Route::get('/configuration/responsibility/search/search', 'ConfiguracionResponsabilidadesController@getData')->name('responsibility.search.search'); 
+Route::get('/configuration/responsibility/search/search', 'ConfiguracionResponsabilidadesController@getData')->name('responsibility.search.search');
 Route::post('/configuration/responsibility/validate','ConfiguracionResponsabilidadesController@validation')->name('responsibility.validation');
 Route::resource('configuration/responsibility','ConfiguracionResponsabilidadesController');
 
@@ -347,7 +394,7 @@ Route::resource('configuration/responsibility','ConfiguracionResponsabilidadesCo
 |--------------------------------------------------------------------------
 */
 Route::get('/configuration/labels/search','ConfiguracionEtiquetaController@search');
-Route::get('/configuration/labels/search/search', 'ConfiguracionEtiquetaController@getLabels')->name('labels.search.search'); 
+Route::get('/configuration/labels/search/search', 'ConfiguracionEtiquetaController@getLabels')->name('labels.search.search');
 Route::post('/configuration/labels/validate','ConfiguracionEtiquetaController@validation')->name('labels.validation');
 Route::resource('configuration/labels','ConfiguracionEtiquetaController');
 
